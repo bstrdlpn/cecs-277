@@ -3,7 +3,7 @@ import random
 
 """
     Student 1, Student 2
-    
+
     Submit by 5th September 11:59 p.m.
     Only one person from each group needs to submit the assignment.
 
@@ -112,9 +112,10 @@ def find_winner(player, comp):
 
 
 def display_scores(player, comp):
-    """"Displays the player scores."""
-    # What is player, comp parameter?
-    return f"Final Score:\nPlayer = {player}\nComputer -= {comp}"
+    """"Displays the scores."""
+    print("Final Score: ")
+    print(f"Player = {player}")
+    print(f"Computer = {comp}")
 
 
 def main():
