@@ -27,10 +27,12 @@ def weapon_menu():
     
     while True:
         player = input("Pick a weapon (R = rock, P = paper, S = scissors, B =  Go Back): ")
-        if player == "B":
-            break
-        elif player == "R" or player == "P" or player == "S":
+        if player.upper() == "B":
+            return 'B'
+        elif player.upper() == "R" or "P" or "S":
             return player
+        else:
+            print('Invalid input, must select "R", "P", "S", or "B"')
 
 def comp_weapon():
     """"Randomly chooses the computer's throw and returns an "R", "P" or "S". """
@@ -127,15 +129,19 @@ def main():
         if selection == 1:
             # create variables that save player and comp choice
             player = weapon_menu()
-            comp = comp_weapon()
-            win_state = find_winner(player, comp)
-            if win_state == 1:
-                player_score += 1
-            elif win_state == 2:
-                comp_score += 1
+            if player == 'B':
+                pass
+            else:
+                comp = comp_weapon()
+                win_state = find_winner(player, comp)
+                if win_state == 1:
+                    player_score += 1
+                elif win_state == 2:
+                    comp_score += 1
         elif selection == 2:
             display_scores(player_score, comp_score)
         elif selection == 3:
             break
+
 
 main()
