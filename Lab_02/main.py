@@ -2,9 +2,8 @@ import check_input
 import random
 
 """
-    Student 1, Student 2
 
-    Use the random module to randomly choose the computer’s weapon.
+    Use the random module to randomly choose the computer's weapon.
     Please stick to the functions and parameters mentioned in the assignment 
     description; don't add anything extra.
     Submit by 5th September 11:59 p.m.
@@ -12,7 +11,7 @@ import random
 
     weapon_menu() - Asks the user to input their choice: (R)ock, (P)aper, (S)cissors,
     or (B)ack. Checks user input for validity and then returns the inputted value.
-    2. comp_weapon() - Randomly chooses the computer’s throw and returns an “R”,
+    2. comp_weapon() - Randomly chooses the computer's throw and returns an “R”,
     “P”, or “S”.
 
 
@@ -20,10 +19,6 @@ import random
     display_scores(player, comp) - Displays the scores.
 
 """
-
-# Global Constants
-_PLAYER_SCORE = 0
-_COMP_SCORE = 0
 
 def weapon_menu():
     """"
@@ -33,13 +28,17 @@ def weapon_menu():
         S = Scissors
         or
         B = Go Back
-    If player selects R, P, or S they continue the game. If player selects B they return to the main menu.
+    
+        If R, P, or S is selected, the choice is returned, otherwise, B will return
+        to the main menu
         """
-    player = input("Pick a weapon (R = rock, P = paper, S = scissors, B =  Go Back): ")
-    if player == "B":
-        main_menu()
-    elif player == "R" or player == "P" or player == "S":
-        find_winner()
+    
+    while True:
+        player = input("Pick a weapon (R = rock, P = paper, S = scissors, B =  Go Back): ")
+        if player == "B":
+            break
+        elif player == "R" or player == "P" or player == "S":
+            return player
 
 def comp_weapon():
     """"Randomly chooses the computer's throw and returns an "R", "P" or "S". """
@@ -134,5 +133,16 @@ def main_menu():
 
 def main():
     #TODO - while loop that continuously asks to play the game, unless quit
-    main_menu()
+    # we can use the check_input module to check input for main menu
+    
+    while True:
+        selection = check_input.get_int('RPS Menu:\n1. Play Game\n2. Show Score\n3. Quit\n')
+        if selection == 1:
+            # create variables that save player and comp choice
+            player = weapon_menu()
+            comp = comp_weapon()
+
+
+            
+    print(comp)
 main()
