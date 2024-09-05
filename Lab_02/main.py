@@ -1,20 +1,18 @@
+
 import check_input
 import random
 
 """
-    Student 1, Student 2
+Long Nguyen, Christina Hipolito
 
-    Submit by 5th September 11:59 p.m.
-    Only one person from each group needs to submit the assignment.
-
-    weapon_menu() - Asks the user to input their choice: (R)ock, (P)aper, 
-    (S)cissors, or (B)ack. Checks user input for validity and then returns the 
-    inputted value.
+==Rock, Paper Scissors:==
+A program that allows a player to play "Rock, Paper, Scissors" against the 
+computer. This will track the number of wins by the computer or player.
 """
 
 def weapon_menu():
     """"
-    Player selects one of 4 options
+    Player selects one of 4 options:
         R = Rock
         P = Paper
         S = Scissors
@@ -22,23 +20,27 @@ def weapon_menu():
         B = Go Back
     
         If R, P, or S is selected, the choice is returned, otherwise, B will 
-        return to the main menu
+        return the user to the main menu
         """
-    
-    while True:
-        player = input("Pick a weapon (R = rock, P = paper, S = scissors, B =  Go Back): ")
-        if player.upper() == "B":
-            return 'B'
-        elif player.upper() == "R" or "P" or "S":
+    valid_flag = False
+
+    while not valid_flag:
+        player = input("Pick a weapon (R = rock, P = paper, S = scissors, B =  Go Back): ").upper()
+        if player == "B":
+            valid_flag = True
             return player
-        else:
-            print('Invalid input, must select "R", "P", "S", or "B"')
+        elif player == "R" or player == "P" or player == "S":
+            valid_flag = True
+            return player
+        else: 
+            print("Invalid Input. PLease Select 'R', 'P', 'S', or 'B'.")
+
 
 def comp_weapon():
-    """"Randomly chooses the computer's throw and returns an "R", "P" or "S". """
+    """"Randomly chooses the computer's throw and returns the choice."""
 
     # Constant containing weapons choices
-    WEAPON_CHOICE = ['R', 'P', 'S']
+    WEAPON_CHOICE = ('R', 'P', 'S')
     # R = Rock
     # P = Paper
     # S = Scissors
@@ -106,26 +108,32 @@ def find_winner(player, comp):
         print('Computer chose Rock')
         print('Computer Wins')
         return 2
-    else:
+    elif player == 'P' and comp == 'S':
         print('You chose Paper')
         print('Computer chose Scissors')
         print('Computer Wins')
         return 2
-
+    else:
+        print('Invalid input, must select "R", "P", "S", or "B"')
+        return
 
 def display_scores(player, comp):
-    """"Displays the scores."""
+    """"
+    Displays the scores.
+
+    Parameters:     player -    player score
+                    computer -  computer score
+    """
     print("Final Score: ")
     print(f"Player = {player}")
     print(f"Computer = {comp}")
 
-
 def main():
     player_score = 0
     comp_score = 0
-    
+
     while True:
-        selection = check_input.get_int('RPS Menu:\n1. Play Game\n2. Show Score\n3. Quit\n')
+        selection = check_input.get_int_range('RPS Menu:\n1. Play Game\n2. Show Score\n3. Quit\n', 1, 3)
         if selection == 1:
             # create variables that save player and comp choice
             player = weapon_menu()
@@ -141,7 +149,8 @@ def main():
         elif selection == 2:
             display_scores(player_score, comp_score)
         elif selection == 3:
+            display_scores(player_score, comp_score)
             break
 
-
 main()
+
