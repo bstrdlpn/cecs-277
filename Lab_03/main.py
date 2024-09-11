@@ -4,9 +4,13 @@ from dictionary import words
 
 def display_gallows(num_incorrect):
     """
-    Given the number of incorrect guesses the user has made, display the state 
-    of the hangman on the gallows (ex. zero incorrect guesses should show an empty 
-    gallows, 6 incorrect guesses should show the complete hanged man).
+    Displays the state of the hangman on the gallows.
+
+    Parameter:
+        num_incorrect : number of incorrect guesses
+
+    Returns:
+        Image of hangman on gallows as related to num-incorrect
     """
     print(f'Incorrect Selections: {num_incorrect}')
     if num_incorrect == 0:
@@ -47,14 +51,14 @@ def display_gallows(num_incorrect):
     elif num_incorrect == 5:
         print('========')
         print('||/    |')
-        print('||    \o')
+        print('||    \\o')
         print('||     |')
         print('||    / \\')
         print('||')
     elif num_incorrect == 6:
         print('========')
         print('||/    |')
-        print('||    \o/')
+        print('||    \\o/')
         print('||     |')
         print('||    / \\')
         print('||')
@@ -74,6 +78,13 @@ def get_letters_remaining(incorrect, correct):
     given the list of incorrect guesses and the list of correct guesses, return 
     the list of remaining letters in the alphabet to choose from (do not display 
     the list from within the function).
+
+    Parameters:
+        incorrect : list of incorrect guesses
+        correct :   list of correct guesses
+
+    Returns:
+        the list of remaining letters in the alphabet to choose from
     """
     pass
 
@@ -87,13 +98,27 @@ def main():
     Create a loop that will repeat until the user guesses all 5 letters in the 
     word, or until the user has made 6 incorrect guesses.
     """
+    # guess lists 
     incorrect_guesses = []
-    correct_guesses = []
-    secret_word = words.random.choice()
+    correct_guesses = ['_', '_', '_', '_', '_']
 
+    #counters
     num_correct_guesses = 0
     num_incorrect_guesses = 0
 
     while True:
+        # Randomly selects a word from the dictionary
+        secret_word = random.choice(words)
+        while True:
+            choice = input('Enter a letter: ').upper()
+            if choice.isalpha():
+                break
+            else:
+                print('Please enter a letter A through Z only.')
+            
+
+    
+    #TODO 
+    # loop that repeats until user quits - breaks on y or n
     
 main()
