@@ -12,7 +12,7 @@ def display_gallows(num_incorrect):
     Returns:
         Image of hangman on gallows as related to num-incorrect
     """
-    print(f'Incorrect Selections: {num_incorrect}')
+
     if num_incorrect == 0:
         print('========')
         print('||/    |')
@@ -70,8 +70,14 @@ def display_letters(letters):
     this function when displaying the correct letters list, the incorrect letters 
     list, and the letters that are remaining list.
     """
-    pass
-
+    if '_' in letters or len(letters) == 6:
+        return print(' '.join(map(str, letters)))
+    elif len(letters) >= 15:
+        letters_remaining = ' '.join(map(str, letters))
+        return print(f"Letters Remaining: {letters_remaining}")
+    else:
+        incorrect_letters = ' '.join(map(str, letters))
+        return print(f"Incorrect Letters: {incorrect_letters}")
 
 def get_letters_remaining(incorrect, correct):
     """
@@ -86,8 +92,20 @@ def get_letters_remaining(incorrect, correct):
     Returns:
         the list of remaining letters in the alphabet to choose from
     """
+    alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     
-    pass
+    # loops which remove the elements contained in incorrect and correct from 
+    # alphabet list, which contains the remaining letters
+    for ele in incorrect:
+        if ele in alphabet:
+            alphabet.remove(ele)
+
+    for ele in correct:
+        if ele in alphabet:
+            alphabet.remove(ele)
+
+    return alphabet
 
 
 def main():
@@ -107,13 +125,17 @@ def main():
     num_correct_guesses = 0
     num_incorrect_guesses = 0
 
-    while True:
-        # Randomly selects a word from the dictionary
-        secret_word = random.choice(words)
+    # Randomly selects a word from the dictionary
+    secret_word = random.choice(words)
+    while True:   
         while True:
+            print(secret_word)
             choice = input('Enter a letter: ').upper()
-            if choice.isalpha():
+            remaining_letters = get_letters_remaining(correct_guesses, incorrect_guesses)
+            if (choice.isalpha()and len(choice) == 1) and choice in remaining_letters:
                 break
+            elif choice not in remaining_letters:
+                print('Please select a different letter that has not been guessed.')
             else:
                 print('Please enter a letter A through Z only.')
         # if the player's choice exists in the secret word
@@ -125,39 +147,51 @@ def main():
                 if choice == char:
                     correct_guesses[index] = choice
             num_correct_guesses += 1
-            get_letters_remaining(incorrect_guesses, 
+            remaining_letters = get_letters_remaining(incorrect_guesses, 
                                   correct_guesses)
-            if '-' not in correct_guesses:
+            display_gallows(num_incorrect_guesses)
+            if '_' not in correct_guesses:
                 print('You win!')
                 choice = check_input.get_yes_no('Play again (Y/N)? ')
                 if not choice:
                     break
+                else:
+                    num_correct_guesses = 0
+                    num_incorrect_guesses = 0
+                    incorrect_guesses = []
+                    correct_guesses = ['_', '_', '_', '_', '_']
+                    secret_word = random.choice(words)
+
         else:
             print('Incorrect!')
+            """
+            Append choice to incorrect_guess
+            Increment num_incorrect_guesses
+            Get remaining_letters
+            Display incorrect selections
+            Display Gallows
+            Display Correct Letters Array
+            Display Letters Rmaining
+            """
             incorrect_guesses.append(choice)
             num_incorrect_guesses += 1
+            remaining_letters = get_letters_remaining(correct_guesses, 
+                                                      incorrect_guesses)
+            display_letters(incorrect_guesses)
+            display_gallows(num_incorrect_guesses)
+            display_letters(correct_guesses)
+            display_letters(remaining_letters)
+            if num_incorrect_guesses >=6:
+                print('You Lose!')
+                choice = check_input.get_yes_no('Play again? (Y/N)? ')
+                if not choice:
+                    break
+                else:
+                    # reset the game counters and lists
+                    num_correct_guesses = 0
+                    num_incorrect_guesses = 0
+                    incorrect_guesses = []
+                    correct_guesses = ['_', '_', '_', '_', '_']
+                    secret_word = random.choice(words)
 
-
-
-
-    """
-    is choice IN secret_word
-        if YES:
-            GET index of choice IN secret_word
-            correct[index] = choice
-            correct += 1
-            display_gallows(incorrect)
-            get_letters_remaining(incorrect, correct)
-            display_letters(letters)
-        if NO:
-            incorrect_guesses.append(choice)
-            incorrect += 1
-            display_gallows(incorrect)
-            get_letters_remaining(incorrect, correct)
-            display_letters(letters
-    """
-    
-    #TODO 
-    # loop that repeats until user quits - breaks on y or n
-    
 main()
