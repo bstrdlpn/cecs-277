@@ -86,6 +86,7 @@ def get_letters_remaining(incorrect, correct):
     Returns:
         the list of remaining letters in the alphabet to choose from
     """
+    
     pass
 
 
@@ -115,8 +116,46 @@ def main():
                 break
             else:
                 print('Please enter a letter A through Z only.')
-            
+        # if the player's choice exists in the secret word
+        if choice in secret_word:
+            print('Correct!')
+            # iterate through string, and update correct guesses list with the
+            # correct indexed character
+            for index, char in enumerate(secret_word):
+                if choice == char:
+                    correct_guesses[index] = choice
+            num_correct_guesses += 1
+            get_letters_remaining(incorrect_guesses, 
+                                  correct_guesses)
+            if '-' not in correct_guesses:
+                print('You win!')
+                choice = check_input.get_yes_no('Play again (Y/N)? ')
+                if not choice:
+                    break
+        else:
+            print('Incorrect!')
+            incorrect_guesses.append(choice)
+            num_incorrect_guesses += 1
 
+
+
+
+    """
+    is choice IN secret_word
+        if YES:
+            GET index of choice IN secret_word
+            correct[index] = choice
+            correct += 1
+            display_gallows(incorrect)
+            get_letters_remaining(incorrect, correct)
+            display_letters(letters)
+        if NO:
+            incorrect_guesses.append(choice)
+            incorrect += 1
+            display_gallows(incorrect)
+            get_letters_remaining(incorrect, correct)
+            display_letters(letters
+    """
     
     #TODO 
     # loop that repeats until user quits - breaks on y or n
