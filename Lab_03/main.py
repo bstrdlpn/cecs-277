@@ -70,7 +70,7 @@ def display_letters(letters):
     this function when displaying the correct letters list, the incorrect letters 
     list, and the letters that are remaining list.
     """
-    if '_' in letters or len(letters) == 6:
+    if '_' in letters or len(letters) == 5:
         return print(' '.join(map(str, letters)))
     elif len(letters) >= 15:
         letters_remaining = ' '.join(map(str, letters))
@@ -134,7 +134,7 @@ def main():
             remaining_letters = get_letters_remaining(correct_guesses, incorrect_guesses)
             if (choice.isalpha()and len(choice) == 1) and choice in remaining_letters:
                 break
-            elif choice not in remaining_letters:
+            elif (choice.isalpha() == False) and (len(choice) > 1):
                 print('Please select a different letter that has not been guessed.')
             else:
                 print('Please enter a letter A through Z only.')
@@ -147,9 +147,12 @@ def main():
                 if choice == char:
                     correct_guesses[index] = choice
             num_correct_guesses += 1
-            remaining_letters = get_letters_remaining(incorrect_guesses, 
-                                  correct_guesses)
+            remaining_letters = get_letters_remaining(correct_guesses, 
+                                                      incorrect_guesses)
+            display_letters(incorrect_guesses)
             display_gallows(num_incorrect_guesses)
+            display_letters(correct_guesses)
+            display_letters(remaining_letters)
             if '_' not in correct_guesses:
                 print('You win!')
                 choice = check_input.get_yes_no('Play again (Y/N)? ')
