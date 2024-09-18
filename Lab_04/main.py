@@ -54,9 +54,31 @@ def move_player(player, dir, upper_bound):
     the direction they moved), otherwise, display an error message and do not 
     update the user's location.
     """
-    
-    pass
+    # moves
+    W = [0, -1]
+    A = [-1, 0]
+    S = [1, 0]
+    D = [0, 1]
 
+    try_move = []
+    try_move += player
+
+    if dir == 'W':
+        try_move[1] += W[1]
+    elif dir == 'A':
+        try_move[0] += A[0]
+    elif dir == 'S':
+        try_move[0] += S[0]
+    else:
+        try_move[1] += D[1]
+
+    if (0 < try_move[0] < upper_bound) and (0 < try_move[1] < upper_bound):
+        return try_move
+    else:
+        print('You cannot move that direction.')
+        return player
+    
+    
 def count_treasures(map, player, upper_bound):
     """
     iterates through the surrounding spaces of the user's current location. 
@@ -70,9 +92,20 @@ def main():
     Creates a loop that continues until the player quits. [insert rest of description]
     """
     map = read_map()
-    
+    player_map = [
+    ['.', '.', '.', '.', '.', '.', '.'],
+    ['.', '.', '.', '.', '.', '.', '.'],
+    ['.', '.', '.', '.', '.', '.', '.'],
+    ['.', '.', '.', '.', '.', '.', '.'],
+    ['.', '.', '.', '.', '.', '.', '.'],
+    ['.', '.', '.', '.', '.', '.', '.'],
+    ['.', '.', '.', '.', '.', '.', '.']
+    ]
+
     # initial player position at top-left of 'map'
     player = [0, 0]
+    # map boundary
+    upper_bound = len(map)
 
     print("Treasure Hunt!")
     print("""
