@@ -57,23 +57,25 @@ def move_player(player, dir, upper_bound):
     # moves
     W = [0, -1]
     A = [-1, 0]
-    S = [1, 0]
-    D = [0, 1]
+    S = [0, 1]
+    D = [1, 0]
 
-    try_move = []
-    try_move += player
+    try_move = player.copy()
 
     if dir == 'W':
         try_move[1] += W[1]
     elif dir == 'A':
         try_move[0] += A[0]
     elif dir == 'S':
-        try_move[0] += S[0]
-    else:
-        try_move[1] += D[1]
+        try_move[1] += S[1]
+    elif dir == 'D':
+        try_move[0] += D[0]
 
-    if (0 < try_move[0] < upper_bound) and (0 < try_move[1] < upper_bound):
-        return try_move
+    print('player in move = ', try_move)
+
+    if (0 <= try_move[0] < upper_bound) and (0 <= try_move[1] < upper_bound):
+        player = try_move.copy()
+        return player
     else:
         print('You cannot move that direction.')
         return player
