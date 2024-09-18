@@ -9,7 +9,9 @@ traps. If the user gets caught in a trap they
 
 def read_map():
     """
-    Read contents of 'map.txt' and return a list of lists.
+    Read contents of 'map.txt' and return it as a list.
+
+    :return map:    list, 2D list of map from text file
     """
     
     map = []
@@ -27,7 +29,7 @@ def display_map(map, player):
     """
     Display the player's position on the map.
 
-    :param map:     2D list, map read from read_map()
+    :param map:     2D list
     :param player:  list, player coordinates
     :returns:       Console display of map, with player position
     """
@@ -46,13 +48,13 @@ def display_map(map, player):
 
 def move_player(player, dir, upper_bound):
     """
-    moves the player in the selected direction (W=up, A=left, S=down, D=right).
-    The boundaries of the map are between 0-upper_bound. Check that the location 
-    that the user is trying to move to isn't out of bounds. If it isn't, then 
-    update the user's location by changing the row and column values in the 
-    location list by adding or subtracting 1 to the row or column (depending on 
-    the direction they moved), otherwise, display an error message and do not 
-    update the user's location.
+    Move the player in the selected direction.
+
+    :param player:      list, player (x, y) coordinates 
+    :param dir:         char, W=up, A=left, S=down, D=right
+    :param upper_bound: int, upper range where 0<= xy coords <= upper_bound
+
+    :returns:           list, player coords
     """
     # moves
     W = [0, -1]
