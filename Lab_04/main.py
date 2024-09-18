@@ -30,8 +30,15 @@ def display_map(map, player):
     where the user currently is in the maze (do not actually place the `P` in 
     the 2D list, just display it).
     """
-    # 
-    pass
+    for x, sublist in enumerate(map):
+        if player[0] == x:
+            # this needs to be fixed, currently prints P plus entire string
+            for y, sublist in enumerate(map):
+                if player[1] == y:
+                    print('P', end=' ')
+        for char in sublist:
+            print(char, end=' ')
+        print()
 
 def move_player(player, dir, upper_bound):
     """
@@ -43,6 +50,7 @@ def move_player(player, dir, upper_bound):
     the direction they moved), otherwise, display an error message and do not 
     update the user's location.
     """
+    
     pass
 
 def count_treasures(map, player, upper_bound):
@@ -57,9 +65,15 @@ def main():
     """
     Creates a loop that continues until the player quits. [insert rest of description]
     """
+    map = read_map()
+    
+    # initial player position at top-left of 'map'
+    player = [0, 0]
 
     print("Treasure Hunt!")
-    print("Find all 7 treasures without getting caught in a trap. Look around to spot nearby traps and treasures.")
+    print("""
+          Find all 7 treasures without getting caught in a trap. Look around to 
+          spot nearby traps and treasures.""")
     while True:
         display_map(map, player)
         dir = input("Enter Direction [WASD or L to Look around (hint) or Q to quit]: ").upper()
