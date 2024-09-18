@@ -98,10 +98,16 @@ def count_treasures(map, player, upper_bound):
     """
     count_treasure = 0
     count_trap = 0
-    
+    search_list = []
+    # maybe perform list slicing
+      
     for row, sublist in enumerate(map):
         for column, char in enumerate(map): 
-            if (0 <= player[0] < upper_bound) and (0 <= player[1] < upper_bound):
+            if (0 <= player[0] < upper_bound) and (0 <= player[1] < upper_bound)\
+            and (0 <= player[0] + 1 < upper_bound) and (0 <=player[1] + 1 <\
+            upper_bound) and (0 <= player[0] - 1 < upper_bound) and (0 <=\
+            player[1] - 1 < upper_bound):
+        
 
     # for all the spaces around the player:
         # if element in sublist[player[0+1]] == 'T'
