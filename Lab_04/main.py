@@ -35,11 +35,11 @@ def display_map(map, player):
     """
 
     # In each row, get the index number of the element
-    for x, sublist in enumerate(map):
+    for row, sublist in enumerate(map):
         # In each column get the index number of the element
-        for y, char in enumerate(sublist):
+        for column, char in enumerate(sublist):
             # If the player coord matches, display 'P'
-            if x == player[0] and y == player[1]:
+            if row == player[0] and column == player[1]:
                 print('P', end=' ')
             else:
                 print(char, end=' ')
@@ -86,9 +86,26 @@ def move_player(player, dir, upper_bound):
 def count_treasures(map, player, upper_bound):
     """
     iterates through the surrounding spaces of the user's current location. 
-    Keep a count of the number of treasures (T'), and traps ('X') that are in 
+    Keep a count of the number of treasures ('T'), and traps ('X') that are in 
     those spaces. Return the two counts.
+
+    :param map:         list, map that contains locations of treasures 'T' and 
+                        traps 'X'
+    :param player:      list, contains player xy coords
+    :param upper_bound: int, upper range where 0<= xy coords <= upper_bound
+
+    :return count_treasure: int, number of treasure 
     """
+    count_treasure = 0
+    count_trap = 0
+    
+    for row, sublist in enumerate(map):
+        for column, char in enumerate(map): 
+            if (0 <= player[0] < upper_bound) and (0 <= player[1] < upper_bound):
+
+    # for all the spaces around the player:
+        # if element in sublist[player[0+1]] == 'T'
+            # count_treasure += 1
     pass
 
 def main():
