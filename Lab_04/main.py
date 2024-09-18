@@ -8,7 +8,9 @@ traps. If the user gets caught in a trap they
 """
 
 def read_map():
-    """Read contents of 'map.txt' and return a list of lists."""
+    """
+    Read contents of 'map.txt' and return a list of lists.
+    """
     
     map = []
 
@@ -23,22 +25,24 @@ def read_map():
 
 def display_map(map, player):
     """
-    passes in the map and the user's location. Iterate through the contents of 
-    the maze. Display each character in the maze in a matrix format.
-    
-    When you reach the user's location, display a 'P' instead so that it shows 
-    where the user currently is in the maze (do not actually place the `P` in 
-    the 2D list, just display it).
+    Display the player's position on the map.
+
+    :param map:     2D list, map read from read_map()
+    :param player:  list, player coordinates
+    :returns:       Console display of map, with player position
     """
+
+    # In each row, get the index number of the element
     for x, sublist in enumerate(map):
-        if player[0] == x:
-            # this needs to be fixed, currently prints P plus entire string
-            for y, sublist in enumerate(map):
-                if player[1] == y:
-                    print('P', end=' ')
-        for char in sublist:
-            print(char, end=' ')
+        # In each column get the index number of the element
+        for y, char in enumerate(sublist):
+            # If the player coord matches, display 'P'
+            if x == player[0] and y == player[1]:
+                print('P', end=' ')
+            else:
+                print(char, end=' ')
         print()
+
 
 def move_player(player, dir, upper_bound):
     """
