@@ -143,6 +143,8 @@ def main():
 
     # initial player position at top-left of 'map'
     player = [0, 0]
+    
+    past_positions = [[0,0]]
 
     # map boundary, square so len(map) gives us rows and columns
     upper_bound = len(map)
@@ -173,9 +175,13 @@ def main():
                 
                 # player found a treasure
                 if map[row][column] == 'T':
-                    print('You found treasure!')
-                    remaining_treasure -= 1
-                    player_map[row][column] = 'T'
+                    if player not in past_positions:
+                        past_positions.append(player)
+                        print('You found treasure!')
+                        remaining_treasure -= 1
+                        player_map[row][column] = 'T'
+                    else:
+                        continue
                     if remaining_treasure == 1:
                         print(f"There is {remaining_treasure} treasure remaining")
                     elif remaining_treasure > 1:
@@ -193,8 +199,12 @@ def main():
                     print(f"You detect {treasures} treasures nearby.")
                 if traps == 1:
                     print(f"You detect {traps} trap nearby.")
+                    x, y = player.copy()
+                    player_map[x][y] = 1
                 else:
                     print(f"You detect {traps} traps nearby.")
+                    x, y = player.copy()
+                    player_map[x][y] = traps
             
             # player quits
             elif dir == 'Q':
@@ -207,10 +217,10 @@ def main():
 
             # char input is invalid
             else:
-                print('Invalid input.')
+                print('Invalid input - enter WASD, L, or Q')
         
         # Needed to catch if player enters something not alpha
         else:
-            print("Invalid input.")
+            print("Invalid input - enter a letter")
 
 main()
