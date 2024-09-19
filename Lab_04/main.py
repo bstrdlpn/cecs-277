@@ -57,23 +57,21 @@ def move_player(player, dir, upper_bound):
     :returns:           list, player coords
     """
     # moves
-    W = [0, -1]
-    A = [-1, 0]
-    S = [0, 1]
-    D = [1, 0]
+    W = [-1, 0]
+    A = [0, -1]
+    S = [1, 0]
+    D = [0, 1]
 
     try_move = player.copy()
 
     if dir == 'W':
-        try_move[1] += W[1]
+        try_move[0] += W[0]
     elif dir == 'A':
-        try_move[0] += A[0]
+        try_move[1] += A[1]
     elif dir == 'S':
-        try_move[1] += S[1]
+        try_move[0] += S[0]
     elif dir == 'D':
-        try_move[0] += D[0]
-
-    print('player in move = ', try_move)
+        try_move[1] += D[1]
 
     if (0 <= try_move[0] < upper_bound) and (0 <= try_move[1] < upper_bound):
         player = try_move.copy()
@@ -83,14 +81,12 @@ def move_player(player, dir, upper_bound):
         return player
     
     
-def count_treasures(map, player, upper_bound):
+def count_treasures_traps(map, player, upper_bound):
     """
-    iterates through the surrounding spaces of the user's current location. 
-    Keep a count of the number of treasures ('T'), and traps ('X') that are in 
-    those spaces. Return the two counts.
+    Iterate through spaces adjacent to the player, return a count of treasures
+    and traps.
 
-    :param map:         list, map that contains locations of treasures 'T' and 
-                        traps 'X'
+    :param map:         list, contains locations of treasures and traps
     :param player:      list, contains player xy coords
     :param upper_bound: int, upper range where 0<= xy coords <= upper_bound
 
@@ -98,7 +94,7 @@ def count_treasures(map, player, upper_bound):
     :return count_trap:     int, number of traps near player
     """   
     search_direction = [[0, -1], [-1, 0], [0, 1], [1, 0], # up, left, right, down
-                        [-1, -1], [1, -1], [-1, 1], [1,1]] #diagonal 
+                        [-1, -1], [1, -1], [-1, 1], [1,1]] # diagonal 
     row, column = player.copy()
     points_of_interest = []
     count_treasure = 0
@@ -150,17 +146,16 @@ def main():
           Find all 7 treasures without getting caught in a trap. Look around to 
           spot nearby traps and treasures.""")
     while True:
-        display_map(map, player)
+        display_map(player_map, player)
         dir = input("Enter Direction [WASD or L to Look around (hint) or Q to quit]: ").upper()
-        if (len(dir) == 1) and (dir.isalpha()):
+        if len(dir) == 1 and dir.isalpha():
             if dir == ('W' or 'A' or 'S' or 'D'):
                 move_player(player, dir, upper_bound)
-                # if movement is invalid:
-                    # print("You cannot move in that direction.")
+
                 # if player falls in a trap:
                     # print("You were caught in a trap!")
                 
-                count_treasures_traps(map, player, upper_bound)
+                
                 # if all treasures were found:
                     # print("You found all the treasure!")
                     # break
