@@ -1,10 +1,12 @@
 """
 Long Nguyen, Christina Hipolito
-9/19/24
+09/19/24
 
 Treasure Hunt Game:
 User navigates a map using WASD to find 7 hidden treasures while avoiding
-traps. If the user gets caught in a trap they 
+traps. The user can receive a hint that will tell them the number of treasures
+and traps nearby. If the user finds all seven treasures, they win. If they run
+into any traps, they lose.
 """
 
 def read_map():
@@ -125,7 +127,10 @@ def main():
     """
     Creates a loop that continues until the player quits. [insert rest of description]
     """
+    # map that contains the locations of the treasures and traps
     map = read_map()
+
+    # map that the player will see when display_map is called
     player_map = [
     ['.', '.', '.', '.', '.', '.', '.'],
     ['.', '.', '.', '.', '.', '.', '.'],
@@ -138,6 +143,7 @@ def main():
 
     # initial player position at top-left of 'map'
     player = [0, 0]
+
     # map boundary, square so len(map) gives us rows and columns
     upper_bound = len(map)
     remaining_treasure = 7
@@ -147,6 +153,8 @@ def main():
     while True:
         display_map(player_map, player)
         dir = input("Enter Direction [WASD or L to Look around (hint) or Q to quit]: ").upper()
+
+        # validate player input
         if len(dir) == 1 and dir.isalpha():
             if dir in ['W', 'A', 'S', 'D']:
                 player = move_player(player, dir, upper_bound)
@@ -167,6 +175,7 @@ def main():
                 if map[row][column] == 'T':
                     print('You found treasure!')
                     remaining_treasure -= 1
+                    player_map[row][column] = 'T'
                     if remaining_treasure == 1:
                         print(f"There is {remaining_treasure} treasure remaining")
                     elif remaining_treasure > 1:
@@ -175,7 +184,7 @@ def main():
                     print('You found all the treasures!')
                     break
 
-            #player looks around
+            # player looks around
             elif dir == 'L':
                 treasures, traps = count_treasures_traps(map, player, upper_bound)
                 if treasures == 1:
@@ -195,5 +204,13 @@ def main():
                 else:
                     print(f"You found {7 - remaining_treasure} treasures.")
                 exit()
+
+            # char input is invalid
+            else:
+                print('Invalid input.')
+        
+        # Needed to catch if player enters something not alpha
+        else:
+            print("Invalid input.")
 
 main()
