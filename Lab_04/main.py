@@ -160,7 +160,7 @@ def main():
         if len(dir) == 1 and dir.isalpha():
             if dir in ['W', 'A', 'S', 'D']:
                 player = move_player(player, dir, upper_bound)
-                row, column = player
+                row, column = player.copy()
                 
                 # player falls into a trap
                 if map[row][column] == 'X':
@@ -197,14 +197,12 @@ def main():
                     print(f"You detect {treasures} treasure nearby.")
                 else:
                     print(f"You detect {treasures} treasures nearby.")
-                if traps == 1:
+                if traps == 1 and player_map[row][column] != 'T':
                     print(f"You detect {traps} trap nearby.")
-                    x, y = player.copy()
-                    player_map[x][y] = 1
-                else:
+                    player_map[row][column] = 1
+                elif player_map[row][column] != 'T':
                     print(f"You detect {traps} traps nearby.")
-                    x, y = player.copy()
-                    player_map[x][y] = traps
+                    player_map[row][column] = traps
             
             # player quits
             elif dir == 'Q':
