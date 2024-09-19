@@ -94,25 +94,36 @@ def count_treasures(map, player, upper_bound):
     :param player:      list, contains player xy coords
     :param upper_bound: int, upper range where 0<= xy coords <= upper_bound
 
-    :return count_treasure: int, number of treasure 
-    """
+    :return count_treasure: int, number of treasures near player 
+    :return count_trap:     int, number of traps near player
+    """   
+    search_direction = [[0, -1], [-1, 0], [0, 1], [1, 0], # up, left, right, down
+                        [-1, -1], [1, -1], [-1, 1], [1,1]] #diagonal 
+    row, column = player.copy()
+    points_of_interest = []
     count_treasure = 0
     count_trap = 0
-    search_list = []
-    # maybe perform list slicing
-      
-    for row, sublist in enumerate(map):
-        for column, char in enumerate(map): 
-            if (0 <= player[0] < upper_bound) and (0 <= player[1] < upper_bound)\
-            and (0 <= player[0] + 1 < upper_bound) and (0 <=player[1] + 1 <\
-            upper_bound) and (0 <= player[0] - 1 < upper_bound) and (0 <=\
-            player[1] - 1 < upper_bound):
-        
 
-    # for all the spaces around the player:
-        # if element in sublist[player[0+1]] == 'T'
-            # count_treasure += 1
-    pass
+    # iterate through search direction list, get xy coords for adjacent squares
+    for dx, dy in search_direction:
+        search_x = row + dx
+        search_y = column + dy
+
+        # if within map bounds, element == char in map[row][column]
+        if 0 <= search_x < upper_bound and 0 <= search_y <= upper_bound:
+            element = map[search_x][search_y]
+            # if the element is a treasure or trap, append it
+            if element in ['T', 'X']:
+                points_of_interest.append(element)
+    
+    for element in points_of_interest:
+        if element == 'T':
+            count_treasure += 1
+        elif element == 'X':
+            count_trap += 1
+
+    return count_treasure, count_trap
+
 
 def main():
     """
