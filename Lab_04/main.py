@@ -138,36 +138,62 @@ def main():
 
     # initial player position at top-left of 'map'
     player = [0, 0]
-    # map boundary
+    # map boundary, square so len(map) gives us rows and columns
     upper_bound = len(map)
+    remaining_treasure = 7
 
     print("Treasure Hunt!")
-    print("""
-          Find all 7 treasures without getting caught in a trap. Look around to 
-          spot nearby traps and treasures.""")
+    print('Find all 7 treasures without getting caught in a trap. Look around to spot nearby traps and treasures.')
     while True:
         display_map(player_map, player)
         dir = input("Enter Direction [WASD or L to Look around (hint) or Q to quit]: ").upper()
         if len(dir) == 1 and dir.isalpha():
-            if dir == ('W' or 'A' or 'S' or 'D'):
-                move_player(player, dir, upper_bound)
+            if dir in ['W', 'A', 'S', 'D']:
+                player = move_player(player, dir, upper_bound)
+                row, column = player
+                print(player)
+                # player falls into a trap
+                if map[row][column] == 'X':
+                    print("You were caught in a trap!")
+                    if 7 - remaining_treasure == 1:
+                        print(f"You found {7 - remaining_treasure} treasure.")
+                    else:
+                        print(f"You found {7 - remaining_treasure} treasures.")
+                    display_map(player_map, player)
+                    print('Game Over!')
+                    break
+                
+                # player found a treasure
+                if map[row][column] == 'T':
+                    print('You found treasure!')
+                    remaining_treasure -= 1
+                    if remaining_treasure == 1:
+                        print(f"There is {remaining_treasure} treasure remaining")
+                    elif remaining_treasure > 1:
+                        print(f"There are {remaining_treasure} treasures remaining")
+                if remaining_treasure == 0:
+                    print('You found all the treasures!')
+                    break
 
-                # if player falls in a trap:
-                    # print("You were caught in a trap!")
-                
-                
-                # if all treasures were found:
-                    # print("You found all the treasure!")
-                    # break
-            
+            #player looks around
             elif dir == 'L':
-                "Look around for traps and treasures"
+                treasures, traps = count_treasures_traps(map, player, upper_bound)
+                if treasures == 1:
+                    print(f"You detect {treasures} treasure nearby.")
+                else:
+                    print(f"You detect {treasures} treasures nearby.")
+                if traps == 1:
+                    print(f"You detect {traps} trap nearby.")
+                else:
+                    print(f"You detect {traps} traps nearby.")
             
+            # player quits
             elif dir == 'Q':
                 print("Exiting. Thank you for playing!")
+                if 7 - remaining_treasure == 1:
+                    print(f"You found {7 - remaining_treasure} treasure.")
+                else:
+                    print(f"You found {7 - remaining_treasure} treasures.")
                 exit()
-        else:
-            print("Invalid input.")
 
-    print("Game Over!")
 main()
