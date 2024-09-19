@@ -106,7 +106,7 @@ def count_treasures_traps(map, player, upper_bound):
         search_y = column + dy
 
         # if within map bounds, element == char in map[row][column]
-        if 0 <= search_x < upper_bound and 0 <= search_y <= upper_bound:
+        if 0 <= search_x < upper_bound and 0 <= search_y < upper_bound:
             element = map[search_x][search_y]
             # if the element is a treasure or trap, append it
             if element in ['T', 'X']:
@@ -151,7 +151,7 @@ def main():
             if dir in ['W', 'A', 'S', 'D']:
                 player = move_player(player, dir, upper_bound)
                 row, column = player
-                print(player)
+                
                 # player falls into a trap
                 if map[row][column] == 'X':
                     print("You were caught in a trap!")
