@@ -147,6 +147,28 @@ def get_time():
     return time_string
 
 def main():
-    # TODO: 
-        # read in contents of file, store in sorted list
+    # read in contents of file, store in a sorted list HINT: try using .sort()
+
+    #repeatedly display the number of tasks and then prompt the user to choose 
+    # from the tasks. you might want to count the list to keep track of tasks.
+        # Main function loop
+        # 1. display current task
+            # display first task at index[0]
+            # if no tasks, display a message that says all their tasks are complete
+        # 2. mark current task complete
+            # display the current task at index[0], remove it and display the 
+            # new current task. if no tasks, display a message.
+        # 3. postpone current task
+            # display the current task and prompt the user to enter a new date
+            # and time. 
+                # remove the task from the list
+                # construct a new task using old description with new date, time
+                # add back to list and re-sort
+            # if there are no tasks, display a message
+        # 4. add new task
+            # prompt user to enter a new task desc, date, time
+            # construct task and add to the list, re-sort it
+        # 5. save and quit
+            # write contents of task list back to file, and exit
+    pass
 main()
