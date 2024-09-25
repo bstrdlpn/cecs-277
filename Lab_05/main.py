@@ -7,7 +7,9 @@ import task
 
 def main_menu():
     """
-    displays the main menu and returns the user's valid input
+    Display the main menu.
+    
+    :returns: 
     """
 
     selection = ['1', '2', '3', '4', '5']
@@ -24,14 +26,13 @@ def main_menu():
         else:
             print('Invalid input, please select [1-5]')
 
-    return choice
+    return int(choice)
+
 
 def read_file():
     """
-    Open the file (`tasklist.txt`) and read in each of the tasks. Each line 
-    consists of the task description, due date, and time separated by commas. 
-    Construct a task object from each line and add it to a list. 
-    Return the filled task list.
+    Open the file (`tasklist.txt`) and read in each of the tasks. Return the 
+    filled task list.
     """
     task_list = []
 
@@ -51,7 +52,7 @@ def write_file(tasklist):
     Task's repr() method (ie. description, date, and time separated by commas).
     """
 
-    with open('write_file', 'w') as file:
+    with open('testfile.txt', 'w') as file:
         for object in tasklist:
             #TODO
             # add stuff to iterate through object list
@@ -62,28 +63,40 @@ def write_file(tasklist):
 
 def get_date():
     """
-    prompts the user to enter the month, day, and year. Valid years are 2000-
-    2100, valid months are 1-12, and valid days are 1-31 (no need to verify that it is a correct
-    day for the month (ie. Feb 31 st is valid)). Return the date in the format: MM/DD/YYYY.
-    If the inputted month or day is less than 10, then add a leading 0 to format it correctly.
+    Prompt the user to enter month, day year. 
+
+    :returns: A string in the format MM/DD/YYYY
     """
     month = ''
     day = ''
     year = ''
-    while True:
-        month = int(input('Enter month: '))
-        if not month.isdigit():
-            print('Invalid month.')
-        if month < 10:
-            month = '0' + str(month)
-        else:
-            continue
-        day = int(input('Enter day: '))
-        year = int(input('Enter a year: '))
-        if year >= 2000 and year <= 2100:
-            break
-        else:
-            print('Invalid year.')
+    is_valid = False
+    while not is_valid:
+        while True:
+            user_input = input('Enter month: ')
+            if user_input.isdigit() and 1 <= int(user_input) <= 12:
+                    month = user_input
+                    break
+            else:
+                print('Invalid month. Select between [1-12]')
+                continue
+        while True:
+            user_input = input('Enter day: ')
+            if user_input.isdigit() and 1 <= int(user_input) <= 31:
+                day = user_input
+                break
+            else:
+                print('Invalid day. Select between [1-31]')
+                continue
+        while True:
+            user_input = input('Enter year: ')
+            if user_input.isdigit() and 2000 <= int(user_input) <= 2100:
+                year = user_input
+                is_valid = True
+                break
+            else:
+                print('Invalid year. Select between [2000 - 2100]')
+                continue
 
     due_date = f"{month}/{day}/{year}"
 
