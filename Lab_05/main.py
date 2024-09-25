@@ -105,11 +105,11 @@ def get_date():
 
 def get_time():
     """
-    prompts the user to enter the hour (military time) and minute. Valid hours 
-    are 0-23 and valid minutes are 0-59. Return the date in the format: HH:MM. 
-    If the inputted hour or minute is less than 10, then add a leading 0 to 
-    format it correctly.
+    Prompt the user to enter the hour (military time) and minute.
+
+    :returns: Date in format HH:MM
     """
+    
     time_hour = ''
     time_minute = ''
     is_valid = False
