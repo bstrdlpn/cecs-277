@@ -9,7 +9,7 @@ def main_menu():
     """
     Display the main menu.
     
-    :returns: 
+    :returns: Int of the user's choice.
     """
 
     selection = ['1', '2', '3', '4', '5']
@@ -31,8 +31,9 @@ def main_menu():
 
 def read_file():
     """
-    Open the file (`tasklist.txt`) and read in each of the tasks. Return the 
-    filled task list.
+    Open the file (`tasklist.txt`) and read in each of the tasks. 
+    
+    :returns: Filled list of task objects
     """
     task_list = []
 
@@ -52,13 +53,10 @@ def write_file(tasklist):
     Task's repr() method (ie. description, date, and time separated by commas).
     """
 
+    # replace testfile.txt with tasklist.txt
     with open('testfile.txt', 'w') as file:
         for object in tasklist:
-            #TODO
-            # add stuff to iterate through object list
-            # enter object and write to file
-
-    pass
+            file.write(repr(object) + '\n')
 
 
 def get_date():
@@ -67,10 +65,12 @@ def get_date():
 
     :returns: A string in the format MM/DD/YYYY
     """
+
     month = ''
     day = ''
     year = ''
     is_valid = False
+
     while not is_valid:
         while True:
             user_input = input('Enter month: ')
@@ -112,19 +112,35 @@ def get_time():
     """
     time_hour = ''
     time_minute = ''
-    
-    while True:
-        time_hour = input('Enter hour: ')
-        if not time_hour.isdigit():
-            print('Invalid time.')
-        if 0 <= time_hour <= 23:
-            continue
-        time_minute = input('Enter minute: ')
-        if not time_minute.isdigit():
-            print('Invalid time.')
-        if time_minute < 10:
-            time_minute = '0' + str(time_minute)
-            break
+    is_valid = False
+
+    while not is_valid:
+        while True:
+            user_input = input('Enter hour: ')
+            if user_input.isdigit() and 0 <= int(user_input) <= 23:
+                if int(user_input) < 10:
+                    time_hour = '0' + user_input 
+                    break
+                else:
+                    time_hour = user_input
+                    break
+            else:
+                print('Invalid hour. Select between [0-23]')
+                continue
+        while True:
+            user_input = input('Enter minute: ')
+            if user_input.isdigit() and 0 <= int(user_input) <= 59:
+                if int(user_input) < 10:
+                    time_minute = '0' + user_input    
+                    is_valid = True
+                    break
+                else:
+                    time_minute = user_input
+                    is_valid = True
+                    break
+            else: 
+                print('Invalid minutes. Select between [0-59]')
+                continue
     
     time_string = f"{time_hour}:{time_minute}"
 
