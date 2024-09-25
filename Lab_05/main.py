@@ -48,9 +48,9 @@ def read_file():
 
 def write_file(tasklist):
     """
-    passes in the list of tasks that will be written to the file (`tasklist.txt`). 
-    Iterate through the list of tasks and write each one to the file using the 
-    Task's repr() method (ie. description, date, and time separated by commas).
+    Writes the list of tasks to text file using Task repr() method.
+
+    :param tasklist: list, list of tasks to be written to .txt file.
     """
 
     # replace testfile.txt with tasklist.txt
@@ -109,7 +109,7 @@ def get_time():
 
     :returns: Date in format HH:MM
     """
-    
+
     time_hour = ''
     time_minute = ''
     is_valid = False
