@@ -9,10 +9,22 @@ def main_menu():
     """
     displays the main menu and returns the user's valid input
     """
-    print('-Tasklist-')
-    print(f"")
 
-    pass
+    selection = ['1', '2', '3', '4', '5']
+
+    print('1. Display current task')
+    print('2. Mark current task complete')
+    print('3. Postpone current task')
+    print('4. Add new task')
+    print('5. Save and quit')
+    while True:
+        choice = input('Enter choice: ')
+        if len(choice) == 1 and choice.isdigit() and choice in selection:
+            break
+        else:
+            print('Invalid input, please select [1-5]')
+
+    return choice
 
 def read_file():
     """
@@ -39,7 +51,7 @@ def write_file(tasklist):
     Task's repr() method (ie. description, date, and time separated by commas).
     """
 
-    with open(write_file, 'w') as file:
+    with open('write_file', 'w') as file:
         for object in tasklist:
             #TODO
             # add stuff to iterate through object list
