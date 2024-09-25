@@ -27,7 +27,7 @@ def read_file():
         for row in file:
             desc, date, time = row.strip().split(",")
             new_task = task.Task(desc, date, time)
-        task_list.append(new_task)
+            task_list.append(new_task)
 
     return task_list
 
