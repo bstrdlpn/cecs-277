@@ -7,19 +7,33 @@ import task
 
 def main_menu():
     """
-    displays the main menu and returns the user's valid input
+    Display the main menu.
+    
+    :returns: Int of the user's choice.
     """
-    print('-Tasklist-')
-    print(f"")
 
-    pass
+    selection = ['1', '2', '3', '4', '5']
+
+    print('1. Display current task')
+    print('2. Mark current task complete')
+    print('3. Postpone current task')
+    print('4. Add new task')
+    print('5. Save and quit')
+    while True:
+        choice = input('Enter choice: ')
+        if len(choice) == 1 and choice.isdigit() and choice in selection:
+            break
+        else:
+            print('Invalid input, please select [1-5]')
+
+    return int(choice)
+
 
 def read_file():
     """
-    Open the file (`tasklist.txt`) and read in each of the tasks. Each line 
-    consists of the task description, due date, and time separated by commas. 
-    Construct a task object from each line and add it to a list. 
-    Return the filled task list.
+    Open the file (`tasklist.txt`) and read in each of the tasks. 
+    
+    :returns: Filled list of task objects
     """
     task_list = []
 
@@ -34,44 +48,55 @@ def read_file():
 
 def write_file(tasklist):
     """
-    passes in the list of tasks that will be written to the file (`tasklist.txt`). 
-    Iterate through the list of tasks and write each one to the file using the 
-    Task's repr() method (ie. description, date, and time separated by commas).
+    Writes the list of tasks to text file using Task repr() method.
+
+    :param tasklist: list, list of tasks to be written to .txt file.
     """
 
-    with open(write_file, 'w') as file:
+    # replace testfile.txt with tasklist.txt
+    with open('testfile.txt', 'w') as file:
         for object in tasklist:
-            #TODO
-            # add stuff to iterate through object list
-            # enter object and write to file
-
-    pass
+            file.write(repr(object) + '\n')
 
 
 def get_date():
     """
-    prompts the user to enter the month, day, and year. Valid years are 2000-
-    2100, valid months are 1-12, and valid days are 1-31 (no need to verify that it is a correct
-    day for the month (ie. Feb 31 st is valid)). Return the date in the format: MM/DD/YYYY.
-    If the inputted month or day is less than 10, then add a leading 0 to format it correctly.
+    Prompt the user to enter month, day year. 
+
+    :returns: A string in the format MM/DD/YYYY
     """
+
     month = ''
     day = ''
     year = ''
-    while True:
-        month = int(input('Enter month: '))
-        if not month.isdigit():
-            print('Invalid month.')
-        if month < 10:
-            month = '0' + str(month)
-        else:
-            continue
-        day = int(input('Enter day: '))
-        year = int(input('Enter a year: '))
-        if year >= 2000 and year <= 2100:
-            break
-        else:
-            print('Invalid year.')
+    is_valid = False
+
+    while not is_valid:
+        while True:
+            user_input = input('Enter month: ')
+            if user_input.isdigit() and 1 <= int(user_input) <= 12:
+                    month = user_input
+                    break
+            else:
+                print('Invalid month. Select between [1-12]')
+                continue
+        while True:
+            user_input = input('Enter day: ')
+            if user_input.isdigit() and 1 <= int(user_input) <= 31:
+                day = user_input
+                break
+            else:
+                print('Invalid day. Select between [1-31]')
+                continue
+        while True:
+            user_input = input('Enter year: ')
+            if user_input.isdigit() and 2000 <= int(user_input) <= 2100:
+                year = user_input
+                is_valid = True
+                break
+            else:
+                print('Invalid year. Select between [2000 - 2100]')
+                continue
 
     due_date = f"{month}/{day}/{year}"
 
@@ -80,32 +105,70 @@ def get_date():
 
 def get_time():
     """
-    prompts the user to enter the hour (military time) and minute. Valid hours 
-    are 0-23 and valid minutes are 0-59. Return the date in the format: HH:MM. 
-    If the inputted hour or minute is less than 10, then add a leading 0 to 
-    format it correctly.
+    Prompt the user to enter the hour (military time) and minute.
+
+    :returns: Date in format HH:MM
     """
+
     time_hour = ''
     time_minute = ''
-    
-    while True:
-        time_hour = input('Enter hour: ')
-        if not time_hour.isdigit():
-            print('Invalid time.')
-        if 0 <= time_hour <= 23:
-            continue
-        time_minute = input('Enter minute: ')
-        if not time_minute.isdigit():
-            print('Invalid time.')
-        if time_minute < 10:
-            time_minute = '0' + str(time_minute)
-            break
+    is_valid = False
+
+    while not is_valid:
+        while True:
+            user_input = input('Enter hour: ')
+            if user_input.isdigit() and 0 <= int(user_input) <= 23:
+                if int(user_input) < 10:
+                    time_hour = '0' + user_input 
+                    break
+                else:
+                    time_hour = user_input
+                    break
+            else:
+                print('Invalid hour. Select between [0-23]')
+                continue
+        while True:
+            user_input = input('Enter minute: ')
+            if user_input.isdigit() and 0 <= int(user_input) <= 59:
+                if int(user_input) < 10:
+                    time_minute = '0' + user_input    
+                    is_valid = True
+                    break
+                else:
+                    time_minute = user_input
+                    is_valid = True
+                    break
+            else: 
+                print('Invalid minutes. Select between [0-59]')
+                continue
     
     time_string = f"{time_hour}:{time_minute}"
 
     return time_string
 
 def main():
-    # TODO: 
-        # read in contents of file, store in sorted list
+    # read in contents of file, store in a sorted list HINT: try using .sort()
+
+    #repeatedly display the number of tasks and then prompt the user to choose 
+    # from the tasks. you might want to count the list to keep track of tasks.
+        # Main function loop
+        # 1. display current task
+            # display first task at index[0]
+            # if no tasks, display a message that says all their tasks are complete
+        # 2. mark current task complete
+            # display the current task at index[0], remove it and display the 
+            # new current task. if no tasks, display a message.
+        # 3. postpone current task
+            # display the current task and prompt the user to enter a new date
+            # and time. 
+                # remove the task from the list
+                # construct a new task using old description with new date, time
+                # add back to list and re-sort
+            # if there are no tasks, display a message
+        # 4. add new task
+            # prompt user to enter a new task desc, date, time
+            # construct task and add to the list, re-sort it
+        # 5. save and quit
+            # write contents of task list back to file, and exit
+    pass
 main()
