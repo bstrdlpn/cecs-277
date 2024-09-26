@@ -86,18 +86,18 @@ class Task:
         
         # compare by year
         if self_year != other_year:
-            return self_year < other_year        
+            return self_year < other_year    
         # compare by month
-        elif self_month != other_month:
+        if self_month != other_month:
             return self_month < other_month
         # compare by day
-        elif self_day != other_day:
-            return self_month < other_month
+        if self_day != other_day:
+            return self_day < other_day
         # compare by hours
-        elif self_hour != other_hour:
+        if self_hour != other_hour:
             return self_hour < other_hour
         #compare by minutes
-        elif self_minute != other_minute:
+        if self_minute != other_minute:
             return self_minute < other_minute
-        else:
-            return self.desc < other.desc
+        
+        return self.desc < other.desc
