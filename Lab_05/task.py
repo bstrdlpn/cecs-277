@@ -1,5 +1,8 @@
 class Task:
     """
+    Long Nguyen, Christina Hipolito
+    09/26/24
+    
     A task in a planner with due date and time.
 
     Attributes
@@ -73,7 +76,7 @@ class Task:
         Return true if the self task is less than the other task. Compares by 
         year, month, day, hour, minute and task description in alpha order.
         """
-        
+   
         # break MM/DD/YYYY string into month, day, year
         self_month, self_day, self_year = map(int, self.date.split('/'))
 
