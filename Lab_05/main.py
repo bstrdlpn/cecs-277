@@ -1,6 +1,13 @@
 """
-Main file (`main.py`) - create the following functions:
+Long Nguyen, Christina Hipolito
+09/26/24
 
+Task List:
+Create a program that maintains a task list for the user.  The user should be 
+able to view the current task, mark the current task complete, postpone the 
+current task, or to add a new task.  The program will read the list from a file 
+('tasklist.txt') when the program begins and then store the updated list by 
+overwriting the old contents when the user quits the program.
 """
 
 import task
@@ -53,8 +60,7 @@ def write_file(tasklist):
     :param tasklist: list, list of tasks to be written to .txt file.
     """
 
-    # replace testfile.txt with tasklist.txt
-    with open('testfile.txt', 'w') as file:
+    with open('tasklist.txt', 'w') as file:
         for object in tasklist:
             file.write(repr(object) + '\n')
 
@@ -81,6 +87,7 @@ def get_date():
                 print('Invalid month. Select between [1-12]')
                 continue
         while True:
+            #should we include something for months with less than 31 days or february?
             user_input = input('Enter day: ')
             if user_input.isdigit() and 1 <= int(user_input) <= 31:
                 day = user_input
@@ -118,7 +125,7 @@ def get_time():
         while True:
             user_input = input('Enter hour: ')
             if user_input.isdigit() and 0 <= int(user_input) <= 23:
-                if int(user_input) < 10:
+                if int(user_input) < 10 and len(user_input) < 2:
                     time_hour = '0' + user_input 
                     break
                 else:
@@ -130,45 +137,81 @@ def get_time():
         while True:
             user_input = input('Enter minute: ')
             if user_input.isdigit() and 0 <= int(user_input) <= 59:
-                if int(user_input) < 10:
-                    time_minute = '0' + user_input    
+                if int(user_input) < 10 and len(user_input) < 2:
+                    time_minute = '0' + user_input
                     is_valid = True
                     break
                 else:
                     time_minute = user_input
                     is_valid = True
                     break
-            else: 
+            else:
                 print('Invalid minutes. Select between [0-59]')
                 continue
-    
+
     time_string = f"{time_hour}:{time_minute}"
 
     return time_string
 
 def main():
-    # read in contents of file, store in a sorted list HINT: try using .sort()
+    """Main loop for planner."""
 
-    #repeatedly display the number of tasks and then prompt the user to choose 
-    # from the tasks. you might want to count the list to keep track of tasks.
-        # Main function loop
-        # 1. display current task
-            # display first task at index[0]
-            # if no tasks, display a message that says all their tasks are complete
-        # 2. mark current task complete
-            # display the current task at index[0], remove it and display the 
-            # new current task. if no tasks, display a message.
-        # 3. postpone current task
-            # display the current task and prompt the user to enter a new date
-            # and time. 
-                # remove the task from the list
-                # construct a new task using old description with new date, time
-                # add back to list and re-sort
-            # if there are no tasks, display a message
-        # 4. add new task
-            # prompt user to enter a new task desc, date, time
-            # construct task and add to the list, re-sort it
-        # 5. save and quit
+    # read in contents of file, store in a sorted list
+    tasklist = read_file()
+    tasklist.sort()
+
+    #repeatedly display the number of tasks and then prompt the user to choose
+    while True:
+        tasklist.sort()
+        print('-Tasklist-')
+        num_tasks = len(tasklist)
+        if num_tasks == 0:
+            print('You have no tasks.')
+        elif num_tasks == 1:
+            print(f"You have {num_tasks} task.")
+        else:
+            print(f"you have {num_tasks} tasks.")
+
+        choice = main_menu()
+
+        if choice == 1:
+            # display the current task
+            if len(tasklist) > 0:
+                print('Current task is:')
+                print(tasklist[0])
+                print()
+            else:
+                print("Nothing Here! All tasks have been completed.")
+                print()
+        elif choice == 2:
+            # mark the current task as complete
+            print('Makring current task as complete:')
+            print(tasklist[0])
+            del tasklist[0]
+            print()
+        elif choice == 3:
+            # postpone the current task
+            print('Postponing task:')
+            print(tasklist[0])
+            task_name = tasklist[0].get_description()
+            new_date = get_date()
+            new_time = get_time()
+            new_task_object = task.Task(task_name, new_date, new_time)
+            tasklist.append(new_task_object)
+            del tasklist[0]
+            print()
+        elif choice == 4:
+            # add new task
+            desc = str(input("Enter a task: "))
+            date = get_date()
+            time = get_time()
+            new_task = task.Task(desc, date, time)
+            tasklist.append(new_task)
+            print()
+        elif choice == 5:
             # write contents of task list back to file, and exit
-    pass
+            print('Saving and exiting.')
+            write_file(tasklist)
+            break
+
 main()
