@@ -19,11 +19,11 @@ def take_turn(player):
     win = [player.has_pair(), player.has_three_of_a_kind(), player.has_series()]
     
     # display win types
-    if win[0] == True:
+    if win[0]:
         print('You got a pair!')
-    if win[1] == True:
+    if win[1]:
         print('You got 3 of a kind!')
-    if win[2] == True:
+    if win[2]:
         print('You got a series of 3!')
 
     # display the updated score:
