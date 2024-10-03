@@ -37,7 +37,7 @@ class Player:
                     count += 1
             
 
-        if count != 2:
+        if count != 1:
             return False
         else:
             self._points += 1
