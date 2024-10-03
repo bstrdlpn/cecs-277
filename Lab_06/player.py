@@ -32,9 +32,10 @@ class Player:
         """
         count = 0
         for i in range(len(self._dice)):
-            for j in range(i + 1, len(self._dice) + 1):
+            for j in range(i +1, len(self._dice)):
                 if self._dice[i] == self._dice[j]:
                     count += 1
+            
 
         if count != 2:
             return False
@@ -48,17 +49,13 @@ class Player:
         Return True if all dice in the list have the same value. Increment 
         points by 3 if True.
         """
-        count = 0
-        for i in range(len(self._dice)):
-            for j in range(i + 1, len(self._dice) + 1):
-                if self._dice[i] == self._dice[j]:
-                    count += 1
 
-        if count != 3:
-            return False
-        else:
+        if self._dice[0] == self._dice[1] == self._dice[2]:
             self._points += 3
             return True
+
+        return False
+    
 
     def has_series(self):
         """
@@ -66,9 +63,10 @@ class Player:
         or 4, 5, 6. Increment points by 2 if True.
         """
         for i in range(len(self._dice)):
-            for j in range(i +1, len(self._dice) + 1):
-                if self._dice[j] - self._dice[i] != 1:
-                    return False
+            for j in range(i + 1, len(self._dice) + 1):
+                if i != len(self._dice) + 1:
+                    if self._dice[j] - self._dice[i] != 1:
+                        return False
 
         self._points += 2
         return True

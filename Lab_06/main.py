@@ -1,36 +1,48 @@
-import check_input
 import player
+from check_input import get_yes_no
 
 
 def take_turn(player):
-    """roll the player’s dice, display the dice, check for and display any win
-    types (pair, series, three-of-a-kind), and display the updated score"""
-    d1 = p.die.Die()
-    d2 = p.die.Die()
-    d3 = p.die.Die()
+    """
+    Roll the player's dice, display the dice, check for and display any win 
+    types (pair, three-of-a-kind, series), and display the updated score.
 
-    # p.roll_dice(self)
-    # p.str(self)
-    print(str(d1) + " " + str(d2) + " " + str(d3))
+    :param player: (object) player
+    """
+    # roll the player's dice
+    player.roll_dice()
 
-    #pass
+    # display the dice
+    print(player)
+
+    # win conditions
+    win = [player.has_pair(), player.has_three_of_a_kind(), player.has_series()]
+    
+    # display win types
+    if win[0] == True:
+        print('You got a pair!')
+    if win[1] == True:
+        print('You got 3 of a kind!')
+    if win[2] == True:
+        print('You got a series of 3!')
+
+    # display the updated score:
+    print(f"Score {player.get_points()}")
+
 
 def main():
-    p = player.Player
+    user = player.Player()
 
-
-    print("-Yahtzee-")
-    take_turn(player)
-    #while True:
-        # 
-        # yn = get_yes_no("Play again? (Y/N): ")
-        # if yn == False:
-            # break
-        # else:
-            # continue
+    while True:
+        print("-Yahtzee-")
+        print()
+        take_turn(user)
+        choice = get_yes_no("Play again? ")
+        print()
+        if not choice:
+            break
 
     print("Game Over.") 
+    print(f"Final Score = {user.get_points()}")
 
-    #score = p.get_points(self)
-    #print("Final Score = " + score)
-    main()
+main()
