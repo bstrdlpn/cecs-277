@@ -25,7 +25,8 @@ def take_turn(player):
         print('You got 3 of a kind!')
     if win[2]:
         print('You got a series of 3!')
-
+    if True not in win:
+        print('Aww. Too Bad.')
     # display the updated score:
     print(f"Score {player.get_points()}")
 
