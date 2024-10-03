@@ -7,6 +7,7 @@ class Player:
         to zero.
         """
         self._dice = [die.Die(), die.Die(), die.Die()]
+        self._dice.sort()
         self._points = 0
 
 
@@ -62,14 +63,11 @@ class Player:
         Return true if values of dice are in a sequence. Ex: 1, 2, 3 or 2, 3, 4
         or 4, 5, 6. Increment points by 2 if True.
         """
-        for i in range(len(self._dice)):
-            for j in range(i + 1, len(self._dice) + 1):
-                if i != len(self._dice) + 1:
-                    if self._dice[j] - self._dice[i] != 1:
-                        return False
-
-        self._points += 2
-        return True
+        if (self._dice[1] - self._dice[0] == 1) and (self._dice[2] - self._dice[1] == 1):
+            self._points += 2
+            return True
+    
+        return False
 
 
     def __str__(self):
