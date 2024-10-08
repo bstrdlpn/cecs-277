@@ -2,6 +2,14 @@ import player
 from check_input import get_yes_no
 
 
+"""
+Christina Hipolito, Long Nguyen
+10/03/2024
+
+Yahtzee:
+Dice game that awards the user for a pair, three-of-a-kind
+"""
+
 def take_turn(player):
     """
     Roll the player's dice, display the dice, check for and display any win 

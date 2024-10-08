@@ -37,7 +37,8 @@ class Player:
                 if self._dice[i] == self._dice[j]:
                     count += 1
             
-
+        # avoid conflict with three of a kind, will only have one match
+        # in win condition
         if count != 1:
             return False
         else:
