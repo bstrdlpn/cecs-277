@@ -37,7 +37,7 @@ class Cipher:
         return encrypted_string
                         
 
-    def _decrypt_message(self, message):
+    def decrypt_message(self, message):
         """
         Decrypt the message string.
         
@@ -80,7 +80,7 @@ class Cipher:
         :param letter: char, letter to decrypt
         :returns: decrypted letter
         """
-        letter = letter.isalpha()
+        letter = letter.upper()
         reverse_alphabet = self._alphabet[::-1]
     
         index = reverse_alphabet.index(letter)
