@@ -13,31 +13,36 @@ def main():
     """
 
     print("-Secret Decoder Ring-")
-    action = check_input.get_int_range("1. Encrypt Message\n2.Decrypt Message\n", 1, 2)
+    action = check_input.get_int_range("1. Encrypt Message\n2. Decrypt Message\n", 1, 2)
     if action == 1:
         print("Enter encryption type:")
-        encrypt = check_input.get_int_range("1. Atbash\n2.Caesar Cipher\n", 1, 2)
+        encrypt = check_input.get_int_range("1. Atbash\n2. Caesar Cipher\n", 1, 2)
         message_e = input("Enter message: ")
         if encrypt == 1:
-            message_e = message_e.cipher.encrypt_message()
+            atbash_cipher = cipher.Cipher()
+            message_e = atbash_cipher.encrypt_message(message_e)
         else:
-            #ask for shift number
-            #encrypt message in caesar
+            shift = check_input.get_int("Enter shift value: ")
+            caesar_cipher = caesar.Caesar(shift)
+            message_e = caesar_cipher.encrypt_message(message_e)
         file = open("message.txt", "w")
         file.write(message_e)
         file.close()
         print("Encrypted message saved to 'message.txt'")
     else:
         print("Enter decryption type:")
-        decrypt = check_input.get_int_range("1. Atbash\n2.Caesar Cipher\n", 1, 2)
-        file = open("message.txt")
+        decrypt = check_input.get_int_range("1. Atbash\n2. Caesar Cipher\n", 1, 2)
+        file = open("message.txt", "r")
+        message_d = file.readline()
+        file.close()
         
-        if decrypt = 1:
-            #decrypt message in atbash
+        if decrypt == 1:
+            atbash_cipher = cipher.Cipher()
+            message_d = atbash_cipher.decrypt_message(message_d)
         else:
-            #ask for shift number
-            #decrypt message in caesar
-        #message_d = decrypted message from message.txt
+            shift = check_input.get_int_range("Enter shift value: ", 1, 25)
+            caesar_cipher = caesar.Caesar(shift)
+            message_d = caesar_cipher.decrypt_message(message_d)
         print("Reading encrypted message from 'message.txt'...")
-        #print("Decrypted message: " + message_d)
+        print("Decrypted message: " + message_d)
 main()
