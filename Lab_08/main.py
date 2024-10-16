@@ -28,7 +28,7 @@ def insert_obstacles(tracks, obstacles, start, end):
     
     :returns: list of tracks with obstacles inserted.
     """
-    
+   
     inserted_obstacles = 0
     # outer loop indexes into the racetrack list
     for row_index, track in enumerate(tracks):
@@ -41,6 +41,26 @@ def insert_obstacles(tracks, obstacles, start, end):
         inserted_obstacles = 0
 
     return tracks
+
+def print_state_take_action(vehicles, tracks):
+    """
+    Print the state of the vehicle objects, print track state, 
+    and return the selected action.
+
+    :param vehicles: list type; list of vehicle objects
+    :param tracks: list type; 2D list of racetracks
+
+    :returns: int type; action that user takes
+    """
+
+    for vehicle in vehicles:
+        print(vehicle)
+    for index, track in enumerate(tracks):
+        print(''.join(tracks[index]))
+    choice = check_input.get_int_range('Choose action (1. Fast, 2. Slow, 3. Special Move): ', 1, 3)
+
+    return choice
+
 
 def main():
 
@@ -67,17 +87,21 @@ def main():
     match player:
         case 1:
             racetracks[0][0] = 'P'
-            print(''.join(racetracks[0]))
+            racetracks[1][0] = racers[1].initial
+            racetracks[2][0] = racers[2].initial
         case 2:
+            racetracks[0][0] = racers[0].initial
             racetracks[1][0] = 'P'
-            print(''.join(racetracks[1]))
+            racetracks[2][0] = racers[2].initial
         case 3:
+            racetracks[0][0] = racers[0].initial
+            racetracks[1][0] = racers[1].initial
             racetracks[2][0] = 'P'
-            print(''.join(racetracks[2]))
         case _:
             # because of our get_int_range for player, i don't think we get here
             pass
-
+        
+    choice = print_state_take_action(racers, racetracks)
     # while player position < 100 (or 99(?)):
         # action = check_input.get_int_range("Choose action (1. Fast, 2. Slow, 3. Special Move):", 1, 3)
         # move player appropriate distance
