@@ -89,7 +89,7 @@ class Vehicle(abc.ABC):
         return f"{self._name} slowly moves {move} units!"
 
     def __str__(self):
-        return f"{self._name} [Position - {self.position()}, Energy - {self.energy()}"
+        return f"{self._name} [Position - {self.position}, Energy - {self.energy}"
 
     @abc.abstractmethod
     def description_string(self):
