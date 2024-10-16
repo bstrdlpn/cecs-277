@@ -5,23 +5,23 @@ class Vehicle(abc.ABC):
     """
     Abstract superclass representing vehicles.
 
+    ===========
     Attributes:
-    -----------
-    _name: vehicle name
-    _initial: vehicle initial speed
-    min_speed: min val of speed range
-    max_speed: max val of speed range
-    _position: vehicle position on track
-    _energy: vehicle power level
-
+    ===========
+    _name: str type; vehicle name
+    _initial: int type; vehicle initial ('C', 'M', 'L')
+    min_speed: int type; min val of speed range
+    max_speed: int type; max val of speed range
+    _position: int type; vehicle position on track
+    _energy: int type; vehicle power level
     """
 
     def __init__(self, name, initial, min_speed, max_speed):
         """
-        Abstract constructor
+        Init Vehicle
 
         :param name: str type; vehicle name
-        :param initial: vehicle initial speed
+        :param initial: vehicle initial 
         :param min_speed: min val of speed range
         :param max_speed: max val of speed range
         """
@@ -33,7 +33,7 @@ class Vehicle(abc.ABC):
         self._energy = 100
     
     @property
-    def initial(self)
+    def initial(self):
         return self._initial
 
     @property
@@ -55,16 +55,17 @@ class Vehicle(abc.ABC):
         with the name of the vehicle and the distance traveled (if applicable).
         """
         if self.energy() >= 5:
+            self._energy -= 5
             move = random.randrange(self.min_speed, self.max_speed)
             self._position += move
-            self._energy -= 5
+            return f"{self._name} quickly moves {move} units!"
         else:
-            # what does the vehicle do if energy < 5?
-            pass
+            # moves slow if under 5 units of energy
+            self.slow(dist)
 
         # crash into the obstacle and stop before it
-        if move < dist:
-            move = dist - 1
+        if move + self._position > dist + self._position:
+            move = self._position + (dist - 1)
             self._position += move
             # return a string that describes the event that occurred with name of vehicle and distance travelled
             return f"{self._name} CRASHES into an obstacle"
@@ -77,10 +78,18 @@ class Vehicle(abc.ABC):
         it. No energy cost. Return string that describes the event that occurred
         with the name of he vehicle and distance traveled (if applicable).
         """
-        pass
+        # vehicle will move at half speed
+        move = random.randrange(self.min_speed, self.max_speed) // 2
+        
+        # go around obstacle
+        if move + self._distance >= dist + self._distance:
+            self._position += move
+            return f"{self._name} slowly and safely moves around the obstacle {move} units!"
+
+        return f"{self._name} slowly moves {move} units!"
 
     def __str__(self):
-        return {self._name}, self.position(), self.energy()
+        return f"{self._name} [Position - {self.position()}, Energy - {self.energy()}"
 
     @abc.abstractmethod
     def description_string(self):
