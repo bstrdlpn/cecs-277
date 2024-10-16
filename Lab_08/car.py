@@ -25,13 +25,13 @@ class Car(vehicle.Vehicle):
         distance. Return a string that describes the event that occurred with 
         the name of the car and the distance traveled (if applicable)."""
         if self._energy >= 15:
-            move = random.randrange(min_speed * 1.5, max_speed * 1.5)
+            move = random.randrange(self.min_speed * 1.5, self.max_speed * 1.5)
 
         if move + self._position > dist + self._position:
             self._energy -= 15
             move = self._position + (dist - 1)
             self._position += move
-            return f"{name} CRASHES into an obstacle"
+            return f"{self._name} CRASHES into an obstacle"
         else:
             self._position += move
             return f"Lightning Car uses nitro boost and moves {move} units!"
