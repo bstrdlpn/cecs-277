@@ -2,15 +2,10 @@ import vehicle
 import random
 
 class Motorcycle(vehicle.Vehicle):
-    def __init__(self, name, initial, min_speed, max_speed):
+    def __init__(self):
         """calls the superclass's init with values for name (“Swift Bike”), 
         initial ('M'), min_speed (6), and max_speed (8)"""
-        super().__init__(name, initial, min_speed, max_speed)
-        self._name = "Swift Bike"
-        self._initial = 'M'
-        self.min_speed = 6
-        self.max_speed = 8
-
+        super().__init__('Swift Bike', 'M', 6, 8)
 
     def slow(self, dist):
         """overridden method - passes in distance to the next obstacle (if there 
@@ -26,7 +21,6 @@ class Motorcycle(vehicle.Vehicle):
         else:
             self._position += move
             return f"{self._name} slowly moves {move} units!"
-
 
     def description_string(self):
         """returns a string with the motorcycles's stats and abilities"""
@@ -50,7 +44,7 @@ class Motorcycle(vehicle.Vehicle):
             return f"{self._name} pops a wheelie and falls over!"
         # if roll is less than 4
         if self._energy >= 15 and chance < 4:
-            move = random.randrange({self.min_speed}, {self.max_speed}) * 2
+            move = random.randrange(self.min_speed, self.max_speed) * 2
             # if there is an obstacle in the way
             if move + self._position > dist + self._position:
                 self._position += dist - 1
