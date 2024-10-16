@@ -67,6 +67,15 @@ def print_state_take_action(vehicles, tracks):
 
     return choice
 
+def distance_to_obstacle(tracks, player_index):
+    """
+    Get distance to the next obstacle
+
+    :param tracks: list type; racetracks list with inserted obstacles
+    :param index: the player index to check (which track to check)
+
+    :returns: int type; distance to obstacle
+    """
 
 def main():
 
@@ -86,20 +95,29 @@ def main():
 
     # construct a list of the three vehicle objects
     racers = [car.Car(), motorcycle.Motorcycle(), truck.Truck()]
+    # track index position, this is for racers
+    indexes = [0, 1, 2]
     print("Rad Racer!")
     print("Choose a vehicle and race it down the track (player = 'P'). Slow down for obstacles ('O') or else you'll crash!")
     print(f"1. {racers[0].description_string()}")
     print(f"2. {racers[1].description_string()}")
     print(f"3. {racers[2].description_string()}")
     
-    player = check_input.get_int_range("Choose your vehicle (1-3):", 1, 3)
+    player_index = check_input.get_int_range("Choose your vehicle (1-3):", 1, 3) - 1
+    indexes.remove(player_index)
+    cpu_1_index, cpu_2_index = random.sample(indexes, 2)
+    
+    racetracks[player_index][0] = 'P'
+    racetracks[cpu_1_index][0] = racers[cpu_1_index].initial
+    racetracks[cpu_2_index][0] = racers[cpu_2_index].initial
 
+    """ trying out above code
     # match case statement inserts player into desired racetrack
     match player:
         case 1:
-            racetracks[0][0] = 'P'
-            racetracks[1][0] = racers[1].initial
-            racetracks[2][0] = racers[2].initial
+            racetracks[player_index][0] = 'P'
+            racetracks[cpu_1_index][0] = racers[1].initial
+            racetracks[cpu_2_index][0] = racers[2].initial
         case 2:
             racetracks[0][0] = racers[0].initial
             racetracks[1][0] = 'P'
@@ -111,17 +129,27 @@ def main():
         case _:
             # because of our get_int_range for player, i don't think we get here
             pass
-        
-    choice = print_state_take_action(racers, racetracks)
+       """ 
+    
     
     # while all vehicles < 99
     while racers[0].position or racers[1].position or racers[2].position < 99:
-        pass
         # print the state and take action
 
-        # move player appropriate distance AND save previous position (to update map with *)
+        choice = print_state_take_action(racers, racetracks)
+        # 1=fast
+        if choice == 1:
+            # move player appropriate distance AND save previous position (to update map with *)
+            racers[player_index]
+            # move opponents AND save previous position (to update map with *)
 
-        # move opponents AND save previous position (to update map with *)
+        # 2=slow
+        elif choice == 2:
+            pass
+        # 3 = special move
+        elif choice == 3:
+            pass
+
 
         # print player state/moves
         # print out opponent status/moves
