@@ -15,9 +15,15 @@ class Motorcycle(vehicle.Vehicle):
         the motorcycle and the distance traveled (if applicable)"""
         move = round(random.randrange(self.min_speed, self.max_speed) * .75)
 
-        if move + self._position > dist + self._position:
+        # if there are no further obstacles
+        if dist is None:
+            self._position += move
+            return f"{self._name} slowly moves {move} units"
+        # there is an obstacle in the way and we pass it
+        if move + self.position > dist + self.position:
             self._position += move
             return f"{self._name} slowly and safely moves around the obstacle {move} units!"
+        # no matches to other conditions
         else:
             self._position += move
             return f"{self._name} slowly moves {move} units!"
@@ -37,19 +43,32 @@ class Motorcycle(vehicle.Vehicle):
         the distance traveled (if applicable)"""
 
         chance = random.randint(1, 4)
+       
+        # insufficient energy
+        if self.energy < 15:
+            if self.energy >= 5:
+                return self.fast(dist)
+            else:
+                return self.slow(dist)
         
-        # if roll on chance is 4 - fail state
-        if self._energy >= 15 and chance == 4:
+        # if roll on chance is 4: fail state
+        if chance == 4:
+            self._energy -= 15
             self._position += 1
             return f"{self._name} pops a wheelie and falls over!"
-        # if roll is less than 4
-        if self._energy >= 15 and chance < 4:
+        # if roll is less than 4, successful chance roll
+        elif chance < 4:
+            self._energy -= 15
             move = random.randrange(self.min_speed, self.max_speed) * 2
-            # if there is an obstacle in the way
-            if move + self._position > dist + self._position:
+            # if there are no further obstacles
+            if dist is None:
+                self._position += move
+                return f"{self._name} pops a wheelie and moves {move} units!"
+            # if there is an obstacle in the way, and we move past that distance
+            elif move + self.position > dist + self.position:
                 self._position += dist - 1
                 return f"{self._name} pops a wheelie and crashes into an obstacle!"
-            # if there is no obstacle
+            # doesn't fit other constraints
             else:
                 self._position += move
                 return f"{self._name} pops a wheelie and moves {move} units!"

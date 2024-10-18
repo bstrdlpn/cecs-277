@@ -21,13 +21,26 @@ class Truck(vehicle.Vehicle):
         :returns: str type; string of action that occurs when 'Ram' encoounters 
         an obstacle (or not)
         """
-        if self._energy >= 15:
-            self._energy -= 15
-            move = random.randrange(self.min_speed, self.max_speed) * 2
-
-            if move + self._position > dist + self._position:
-                self._position += move
-                return f"{self._name} rams forward bashing through the obstacle to go {move} units!"
+         # insufficient energy
+        if self.energy < 15:
+            if self.energy >= 5:
+                return self.fast(dist)
             else:
-                self._position += move
-                return f"{self._name} rams forward {move} units!"
+                return self.slow(dist)
+
+        # calculate move
+        move = random.randrange(self.min_speed, self.max_speed) * 2
+        self._energy -= 15
+
+        # if there are no further obstacles
+        if dist is None:
+            return f"{self._name} rams forward {move} units!"
+        # there is an obstacle in the way, and we pass it
+        elif self.position + move > self.position + dist:
+            self._position += move
+            return f"{self._name} rams forward bashing through the obstacle to go {move} units!"
+        # other constraints don't apply
+        else:
+            self._position += move
+            return f"{self._name} rams forward {move} units!"
+

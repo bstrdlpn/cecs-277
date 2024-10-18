@@ -10,7 +10,7 @@ class Car(vehicle.Vehicle):
         super().__init__('Lightning Car', 'C', 6, 8)
 
     def description_string(self):
-        """returns a string with the car's stats and abilities"""
+        """Return a string with the car's stats and abilities"""
         return "Lightning Car - a fast car (6-8 units). Special: Nitro Boost (1.5x speed)"
 
     def special_move(self, dist):
@@ -20,14 +20,30 @@ class Car(vehicle.Vehicle):
         stops in the space just before it, otherwise it moves the randomized 
         distance. Return a string that describes the event that occurred with 
         the name of the car and the distance traveled (if applicable)."""
-        if self._energy >= 15:
-            move = round(random.randrange(self.min_speed, self.max_speed) * 1.5)
+        
+        # insufficient energy conditions
+        if self.energy < 15:
+            if self.energy >= 5:
+                return self.fast(dist)
+            else:
+                return self.slow(dist)
+            
+            
+        # calculate the move
+        move = round(random.randrange(self.min_speed, self.max_speed) * 1.5)
+        self._energy -= 15
 
-        if move + self._position > dist + self._position:
-            self._energy -= 15
-            move = self._position + (dist - 1)
+        # if there are no further obstacles
+        if dist is None:
+            self._position += move
+            return f"{self._name} uses nitro boost and moves {move} units!"
+        # if move finishes after the obstacle
+        # vehicle crashes
+        elif move + self.position > dist + self.position:
+            move = (dist - 1)
             self._position += move
             return f"{self._name} CRASHES into an obstacle"
+        # no match on other conditions
         else:
             self._position += move
             return f"Lightning Car uses nitro boost and moves {move} units!"
