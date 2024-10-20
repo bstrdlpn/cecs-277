@@ -14,12 +14,13 @@ class Car(vehicle.Vehicle):
         return "Lightning Car - a fast car (6-8 units). Special: Nitro Boost (1.5x speed)"
 
     def special_move(self, dist):
-        """passes in the distance to the next obstacle (if there is
-        one). If there is sufficient energy (>= 15), deduct 15 energy and move 
-        the car at 1.5x speed. If there is an obstacle, then it will crash and 
-        stops in the space just before it, otherwise it moves the randomized 
-        distance. Return a string that describes the event that occurred with 
-        the name of the car and the distance traveled (if applicable)."""
+        """
+        Nitro boost, 1.5x speed.
+
+        :param dist: int type; distance from player to the next obstacle
+
+        :returns: str type; str describing the action
+        """
         
         # insufficient energy conditions
         if self.energy < 15:

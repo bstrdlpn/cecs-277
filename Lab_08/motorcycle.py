@@ -8,11 +8,11 @@ class Motorcycle(vehicle.Vehicle):
         super().__init__('Swift Bike', 'M', 6, 8)
 
     def slow(self, dist):
-        """overridden method - passes in distance to the next obstacle (if there 
-        is one). The motorcycle will move at 75% speed, rather than half. If 
-        there's an obstacle, then it will go around it. There is no energy cost. 
-        Return a string that describes the event that occurred with the name of 
-        the motorcycle and the distance traveled (if applicable)"""
+        """
+        overridden method - 75% speed
+
+        :param dist: int type; distance to the next obstacle
+        """
         move = round(random.randrange(self.min_speed, self.max_speed) * .75)
 
         # if there are no further obstacles
@@ -33,14 +33,13 @@ class Motorcycle(vehicle.Vehicle):
         return f"{self._name} - a speedy motorcycle ({self.min_speed}-{self.max_speed}). Special: Wheelie (2x speed but there's a chance you'll crash)."
 
     def special_move(self, dist):
-        """passes in distance to the next obstacle (if there is one). If there 
-        is sufficient energy (>= 15), deduct 15 energy, then there is a 75% 
-        chance that the motorcycle will move at 2x speed, otherwise it will 
-        crash and only move one space forward. If it was successful but there is 
-        an obstacle, then it will crash and stops in the space just before it, 
-        otherwise it moves the randomized distance. Return a string that 
-        describes the event that occurred with the name of the motorcycle and 
-        the distance traveled (if applicable)"""
+        """
+        Wheelie special ability. 25 percent chance of failure. 
+
+        :param dist: int type; dist from player to obstacle
+
+        :returns: str type; str describing the action
+        """
 
         chance = random.randint(1, 4)
        

@@ -72,8 +72,6 @@ def print_state(vehicles, tracks):
         print(''.join(tracks[index]))
 
 def take_action():
-    # TODO: split this function into two functions
-    
     """
     Ask the user to select an action and return it.
 
@@ -112,43 +110,27 @@ def distance_to_obstacle(vehicles, tracks, index):
 
 def cpu_take_action(vehicles, tracks, index):
     """Calculate the move for the CPU."""
-    current_position = vehicles[index].position
     cpu_roll = random.randrange(1, 100)
 
     if 1 <= cpu_roll <= 30:
         print(vehicles[index].fast(distance_to_obstacle(vehicles, tracks, index)))
-        #insert_element(tracks, index, current_position)
-        #tracks[index][vehicles[index].position] = vehicles[index].initial 
     elif 31 <= cpu_roll <= 70:
         print(vehicles[index].slow(distance_to_obstacle(vehicles, tracks, index)))
-        #insert_element(tracks, index, current_position)
-        #tracks[index][vehicles[index].position] = vehicles[index].initial
     else:
         print(vehicles[index].special_move(distance_to_obstacle(vehicles, tracks, index)))
-        #insert_element(tracks, index, current_position)
-        #tracks[index][vehicles[index].position] = vehicles[index].initial
-
 
 
 def calculate_player_move(vehicles, tracks, index, choice):
     """Calculate the move for the player."""
-    #current_position = vehicles[index].position
 
     if choice == 1:
-        # move player appropriate distance AND save previous position (to update map with *)
         print(vehicles[index].fast(distance_to_obstacle(vehicles, tracks, index)))
-        #insert_element(tracks, index, current_position)
-        #tracks[index][vehicles[index].position] = 'P' 
     # 2 = slow
     elif choice == 2:
         print(vehicles[index].slow(distance_to_obstacle(vehicles, tracks, index)))
-        #insert_element(tracks, index, current_position)
-        #tracks[index][vehicles[index].position] = 'P'
     # 3 = special move
     elif choice == 3:
         print(vehicles[index].special_move(distance_to_obstacle(vehicles, tracks, index)))
-        #insert_element(tracks, index, current_position)
-        #tracks[index][vehicles[index].position] = 'P'
 
 
 def main():

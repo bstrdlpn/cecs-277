@@ -46,13 +46,11 @@ class Vehicle(abc.ABC):
 
     def fast(self, dist):
         """
-        Pass in the distance to the next obstacle (if there is one). If there is
-        sufficient energy (>=5), randomize a value between min and max speed for
-        the number of spacees they will move and deduct 5 energy. If that movement
-        is less than the distance to the next obstacle, then they move that amount,
-        otherwise, it crashes into the obstacle and stops in the space just before
-        the obstacle. Return a string that describes the event that occurred 
-        with the name of the vehicle and the distance traveled (if applicable).
+        Fast movement for the vehicle. 
+
+        :param dist: int type; distance to the next obstacle
+        
+        :returns: str type; str describing the action
         """
         # check energy
         if self.energy < 5:
@@ -81,10 +79,11 @@ class Vehicle(abc.ABC):
     
     def slow(self, dist):
         """
-        Pass in the distance to the next obstacle (if there is one). The vehicle 
-        will move at half speed. If there is an obstacle, then it will go around 
-        it. No energy cost. Return string that describes the event that occurred
-        with the name of he vehicle and distance traveled (if applicable).
+        Slow movement for the vehicle.
+
+        :param dist: int type; distance to the next obstacle
+
+        :returns: str type; str describing the action
         """
         # vehicle will move at half speed
         move = random.randrange(self.min_speed, self.max_speed) // 2
