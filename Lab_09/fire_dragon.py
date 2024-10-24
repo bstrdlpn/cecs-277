@@ -8,7 +8,7 @@ class FireDragon(dragon.Dragon, fire.FireMixin):
         """
         call super() top set a default name, hp, and number of special attacks
         """
-        super().__init__('Gronkle', 15, 3)
+        super().__init__(name, max_hp, num_sp)
 
     def special_attack(self, opponent):
         """
@@ -16,4 +16,4 @@ class FireDragon(dragon.Dragon, fire.FireMixin):
         """
         attack = random.choice([self.fireball, self.fireblast])
 
-        attack(opponent)
+        return attack(opponent)
