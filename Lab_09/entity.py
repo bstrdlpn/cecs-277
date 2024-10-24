@@ -33,7 +33,7 @@ class Entity(abc.ABC):
         """
         Return the entity's name and hp in the format "Name: hp/max_hp".
         """
-        return f"Name: {self.hp}/{self._max_hp}"
+        return f"{self.name}: {self.hp}/{self._max_hp}"
 
     @abc.abstractmethod
     def basic_attack(self):

@@ -1,3 +1,5 @@
+import random
+
 class FlyingMixin:
     def swoop(self, opponent):
         """
@@ -6,7 +8,13 @@ class FlyingMixin:
         number of sp attacks is decremented. Return a str with desc attack and 
         damage dealt ot hero, otherwise, no damage done, str desc failure return.
         """
-        pass
+        if self._special_attacks > 0:
+            self.decrement_special_attacks()
+            damage = random.randrange(4, 8)
+            opponent.take_damage(damage)
+            return f"{self.name} takes to the skies and swoops down dealing {damage} damage to {opponent.name}!"
+        else:
+            return f"{self.name} attempts to take flight, but is all out of energy."
 
     def windblast(self, opponent):
         """
@@ -15,3 +23,10 @@ class FlyingMixin:
         Return a string with a desc of the attack and damage dealt. Otherwise,
         no damage done, and string describing failure is returned.
         """
+        if self._special_attacks > 0:
+            self.decrement_special_attacks()
+            damage = random.randrange(3, 7)
+            opponent.take_damage(damage)
+            return f"{self.name} flaps its wings and blasts {opponent.name} for {damage} damage!"
+        else:
+            return f"{self.name} attempts to move its wings, but is all out of energy."

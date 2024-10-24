@@ -1,15 +1,20 @@
 import entity
+import random
 
 class Dragon(entity.Entity):
     def __init__(self, name, max_hp, num_sp):
-        super().__init__()
+        super().__init__(self, name, max_hp, num_sp )
         _special_attacks = num_sp
 
     def decrement_special_attacks(self):
         """
         Subtract 1 from _special_attacks. If value becomes negative, set to 0.
         """
-        pass
+        self._special_attacks -= 1
+
+        # if the num of special attacks is negative set to 0
+        if self._special_attacks < 0:
+            self._special_attacks = 0
 
     def basic_attack(self, opponent):
         """
@@ -17,11 +22,14 @@ class Dragon(entity.Entity):
         Return a string with the desc of the attack and the damage dealt to the 
         hero.
         """
-        pass
+        damage = random.randrange(3,7)
+        opponent.take_damage(damage)
+
+        return f"{self.name} smashes you with its tail for {damage} damage!"
 
     def __str__(self):
         """
         use super to get the __str__ from the entity class, then concatenate on 
         then number of special attacks remaining.
         """
-        pass
+        return super().__str__() + "Special attacks remaining: " + self._special_attacks
