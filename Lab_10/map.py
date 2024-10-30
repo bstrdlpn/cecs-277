@@ -21,13 +21,10 @@ class Map():
         of the file and the revealed list is used to determine wheteher the contents
         of the map are displayed or not('x' if not displayed)
         """
-        map_list = []
-        
         with open('map-1.txt', 'r') as file:
-            for line in file:
-                map_list.append(line.rstrip())
-                
+            self._map = [list(line.rstrip()) for line in file]
         
+        self._revealed = [[False for char in row] for row in self._map]
 
     def __getitem__(self, row):
         """
@@ -35,21 +32,20 @@ class Map():
         used ot access a row m[r] or can be used ot access a value at a row and 
         column m[r][c]
         """
-        pass
+        if isinstance(row, int):
+            return self._map[row]
+        elif isinstance(row, tuple) and len(row) == 2:
+            r, c = row
+            return self._map[r][c]
+        else:
+            raise IndexError("Invalid index, must be a row or a tuple of two integers.")
+
 
     def __len__(self):
         """
         returns the number of rows in the map list. Note: if you want to know 
         num rows, use len(m), if num of columns use len(m[r]).
         """
-        map = []
-        
-        with open("map-1.txt", 'r') as file:
-            for row in file:
-                sublist = row.split()
-                map.append(sublist)
-                
-        return len[map]
 
 
     def show_map(self, loc):
@@ -57,8 +53,8 @@ class Map():
         Display the player's position on the map.
 
         :param map:     2D list
-        :param player:  list, player coordinates
-        :returns:       Console display of map, with player position
+        :param player:  list; player coordinates
+        :returns:       str; 
         """
 
         # In each row, get the index number of the element
