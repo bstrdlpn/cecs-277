@@ -8,11 +8,10 @@ class Map():
     """
     _instance = None
     _initialized = False
-
     def __new__(cls):
-        if cls.__instance is None:
-            cls.__instance = super().__new__(cls)
-        return cls.__instance
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
 
     def __init__(self):
         """
@@ -40,44 +39,57 @@ class Map():
         else:
             raise IndexError("Invalid index, must be a row or a tuple of two integers.")
 
-
     def __len__(self):
         """
         returns the number of rows in the map list. Note: if you want to know 
         num rows, use len(m), if num of columns use len(m[r]).
         """
-
+        # if the map list is empty
+        if not self._map:
+            return 0
+        else:
+            return len(self._map)
 
     def show_map(self, loc):
         """
-        Display the player's position on the map.
+        Return the map as a string in the format of a 5x5 matrix of chars where
+        each revealed = chars from map. Unrevealed = 'x', hero = '*'
 
-        :param map:     2D list
-        :param player:  list; player coordinates
-        :returns:       str; 
+        :param loc: tuple; location of hero char
         """
-
-        # In each row, get the index number of the element
-        for row, sublist in enumerate(map):
-            # In each column get the index number of the element
-            for column, char in enumerate(sublist):
-                # If the player coord matches, display '*'
-                if row == loc[0] and column == loc[1]:
-                    print('*', end=' ')
+        revealed_map = []
+        
+        for i in range(5):
+            row = []
+            for j in range(5):
+                # where hero char is, append *
+                if (i, j) == loc:
+                    row.append('*')
+                # if True, append char from map
+                elif self._revealed[i][j]:
+                    row.append(self._map[i][j])
+                # False, append 'x'
                 else:
-                    print(char, end=' ')
-            print()
+                    row.append('x')
+            revealed_map.append(' '.join(row))
+        
+        return '\n'.join(revealed_map)
 
     def reveal(self, loc):
         """
-        Set the value in the 2D revealed list at the specified loc to True
+        Set the value in the 2D revealed list at the specified loc to True.
+
+        :param loc: tuple; index of the specified bool
         """
-        pass
+        r, c = loc
+        self._revealed[r][c] = True
 
     def remove_at_loc(self, loc):
         """
-        Ovrwrites the character in the map list at the specified location with 
-        an 'n'.
+        Overwrite the char in the map list at the specified location with 'n'.
+
+        :param loc: tuple; index of the specified char
         """
-        pass
+        r,c = loc
+        self._map[r][c] = 'n'
         
