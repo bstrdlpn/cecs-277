@@ -1,10 +1,17 @@
 import entity
+import map
 import random
 
 class Hero(entity.Entity):
     def __init__(self, name, max_hp):
         super().__init__(name, max_hp)
-        pos = [0,0] # starting position
+        
+        # starting position at [0,0]
+        self._loc = [0,0]
+
+    @property
+    def loc(self):
+        return self._loc
 
     def attack(self, entity):
         """
@@ -18,25 +25,41 @@ class Hero(entity.Entity):
         return f"{self.name} attacks a {entity.name} for {damage} damage!"
     
     def go_north(self):
-        if pos[1] == 0:
-            print("You can't move that way.")
+        """Move hero North."""
+        current_row = self.loc[0]
+
+        if current_row > 0:
+            self._loc = [current_row - 1, self.loc[1]]
+            return self._map[self.loc]
         else:
-            pos[1] += 1
+            return 'o'
 
     def go_south(self):
-        if pos[1] == 4:
-            print("You can't move that way.")
+        """Move hero South."""
+        current_row = self.loc[0]
+
+        if current_row < 4:
+            self._loc = [current_row + 1, self.loc[1]]
+            return self._map[self.loc]
         else:
-            pos[1] -= 1
-    
+            return 'o'
+
     def go_east(self):
-        if pos[0] == 0:
-            print("You can't move that way.")
+        """Move hero East."""
+        current_col = self.loc[1]
+
+        if current_col < 4:
+            self._loc = [self.loc[0], current_col + 1]
+            return self._map[self.loc]
         else:
-            pos[0] += 1
-    
+            return 'o'
+
     def go_west(self):
-        if pos[0] == 0:
-            print("You can't move that way.")
+        """Move hero West."""
+        current_col = self.loc[1]
+
+        if current_col > 0:
+            self._loc = [self.loc[0], current_col - 1]
+            return self._map[self.loc]
         else:
-            pos[0] -= 1
+            return 'o'
