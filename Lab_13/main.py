@@ -53,6 +53,10 @@ def get_date():
         while True:
             user_input = input('Enter month: ')
             if user_input.isdigit() and 1 <= int(user_input) <= 12:
+                if int(user_input) < 10:
+                    month = '0' + user_input
+                    break
+                else:
                     month = user_input
                     break
             else:
@@ -62,8 +66,12 @@ def get_date():
             #should we include something for months with less than 31 days or february?
             user_input = input('Enter day: ')
             if user_input.isdigit() and 1 <= int(user_input) <= 31:
-                day = user_input
-                break
+                if int(user_input) < 10:
+                    day = '0' + user_input
+                    break
+                else:
+                    day = user_input 
+                    break
             else:
                 print('Invalid day. Select between [1-31]')
                 continue
@@ -198,26 +206,43 @@ def main():
             print(f"you have {num_tasks} tasks.")
 
         choice = main_menu()
+        print()
 
         match choice:
             case 1:
                 # Display all tasks
                 for i, task in enumerate(tasks):
                     print(f"{i + 1}. {task}")
+                print()
             case 2:
                 # Display current task
+                print("Current task is:")
                 print(tasks.get_current_task())
+                print()
             case 3:
                 # Add new task
-                pass
+                desc = str(input("Enter a task: "))
+                date = get_date()
+                time = get_time()
+                tasks.add_task(desc, date, time)
+                print()
             case 4:
                 # Mark current task complete
-                pass
+                print("Marking current task as complete:")
+                print(tasks.mark_complete())
+                print("New current task is:")
+                print(tasks.get_current_task())
+                print()
             case 5:
                 # Postpone current task
-                pass
+                print("Postponing task:")
+                print(tasks.get_current_task)
+                tasks.postpone_task()
             case 6:
                 # Search tasks by date
+                print("Search by Date:")
+                month = get_
+
                 pass
             case 7:
                 # Save and quit
