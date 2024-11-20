@@ -189,7 +189,7 @@ def main():
     #repeatedly display the number of tasks and then prompt the user to choose
     while True:
         print('-Tasklist-')
-        num_tasks = len(tasklist)
+        num_tasks = len(tasks)
         if num_tasks == 0:
             print('You have no tasks.')
         elif num_tasks == 1:
@@ -202,10 +202,11 @@ def main():
         match choice:
             case 1:
                 # Display all tasks
-                pass
+                for i, task in enumerate(tasks):
+                    print(f"{i + 1}. {task}")
             case 2:
                 # Display current task
-                pass
+                print(tasks.get_current_task())
             case 3:
                 # Add new task
                 pass
@@ -221,7 +222,7 @@ def main():
             case 7:
                 # Save and quit
                 pass
-            
+
         # if choice == 1:
         #     # display all tasks, sorted and numbered
         #     if len(tasklist) > 0:
