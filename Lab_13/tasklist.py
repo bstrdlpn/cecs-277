@@ -82,9 +82,9 @@ class Tasklist:
         Iterate the iterator one position at a time. Raise a StopIteration when the iterator reaches
         the end of the tasklist, otherwise return the Task object at the iterator's current position.
         """
-        if self._i < len(self._tasklist):
-            task = self._tasklist[self._i]
-            self._i += 1
+        if self._n < len(self._tasklist):
+            task = self._tasklist[self._n]
+            self._n += 1
             return task
         else:
             raise StopIteration
