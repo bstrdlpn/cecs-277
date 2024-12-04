@@ -9,14 +9,21 @@ class StateEat(puppy_state.PuppyState):
 
         :return: str; string describing action puppy takes during play
         """
-        puppy.play(state_play.StatePlay())
+        puppy.change_state(state_play.StatePlay())
         return "The puppy looks up from its food and chases the ball you threw."
     
     def feed(self, puppy):
         """
-        Feed the puppy.
+        Feed the puppy. If puppy has been fed consecutively three times, change 
+        the _state attribute to 'StateAsleep' and return string desc, else return 
+        string desc.
+
+        :return: str; string describing action of what puppy does.
         """
-        if puppy._state == puppy.StateEat:
-            return "The puppy continues to eat as you add another scoop of kibble to its bowl."
+        puppy.inc_feeds()
+        if puppy.feeds % 3 == 0:
+            puppy.reset()
+            puppy.change_state(state_asleep.StateAsleep())
+            return "The puppy ate so much it fell asleep!"
         else:
-            puppy.feed(state_asleep.StateFeed())
+            return "The puppy continues to eat as you add another scoop of kibble to its bowl."
