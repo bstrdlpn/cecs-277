@@ -4,7 +4,7 @@ import puppy
 def main():
     """
     Construct a puppy object and then display a menu that allows the user to play with
-    or feed the puppy. Display the puppy’s reaction to the user’s choice. Repeat until the
+    or feed the puppy. Display the puppy's reaction to the user’s choice. Repeat until the
     user chooses to quit.
     """
     p = puppy.Puppy()
